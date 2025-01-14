@@ -1,0 +1,8 @@
+= Securing the Software Supply Chain
+Michael Lieberman; Brandon Lum
+v0.1, {docdate}: WIP
+:doctype: book
+:backend: docbook
+:url-repo: https://github.com/Kusari-Sandbox/securing-software-supply-chain/
+
+include::frontmatter.adoc[]
