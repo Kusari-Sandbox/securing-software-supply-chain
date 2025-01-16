@@ -1,0 +1,24 @@
+[glossary]
+== Glossary
+
+[glossary]
+application security::
+    measures to prevent or address vulnerabilities in an application's code
+binary authorization::
+    a process for determinding trust based on the provenance provided to you by a secure software factory or other approved mechanism and decide whether you trust that system or software within your risk appetite
+provenance::
+    a record of the history or origin of something, including the intermediate steps
+secure software factory::
+    a system intended to securely ingest trusted source code and dependencies, securely build software, and securely publish the packaged resultant artifacts
+software bill of materials::
+    a record, typically in machine-readable form, of the components used to build a piece of software
+software supply chain::
+    the tools, practices, and components used to develop, build, test, and publish software
+software supply chain security::
+    cybersecurity applies to the software supply chain
+system delivery lifecycle::
+    (or software development lifecycle) the development, delivery, or consumption of software systems
+trusted platform module::
+    a dedicated computer chip for storing and protecting sensitive information
+zero trust::
+    establishing trust at levels and with parties that fit your risk appetite
