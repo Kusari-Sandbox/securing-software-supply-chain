@@ -1,0 +1,400 @@
+== Supply Chain Fundamentals
+
+This chapter covers:
+
+* Learning what a supply chain is and isn’t
+* Understanding the impacts of supply chain incidents
+* Comprehending the primary goals and challenges of supply chain security
+* Developing the high level concepts needed to help achieve the goals of supply chain security
+
+A test-environment-only version of an application is deployed.
+A build system is hijacked to include bad code.
+Rogue open source developers have written malicious code.
+Servers with unknown hardware installed on them are racked in a data center.
+These are examples of real supply chain vulnerabilities and attacks.
+These attacks and vulnerabilities don’t just affect a single system, they affect multiple systems.
+In some cases these attacks can affect the entire information technology environment of an organization.
+They are also becoming increasingly frequent.
+In 2021, over 12,000 supply chain security attacks were recorded — a 650% increase from the previous year.footnote:[https://www.sonatype.com/resources/state-of-the-software-supply-chain-2021]
+Over half of organizations in a 2022 survey have been impacted by supply chain attacks.footnote:[https://anchore.com/software-supply-chain-security-report-2022/]
+The world runs on technology, and supply chain security attacks have real costs in time, lost revenue, and reputational harm.
+
+=== What is Supply Chain Security?
+
+A supply chain is the process by which a finished good comes together.
+It includes supplies, methods, and labor.
+Complex products, like a smartphone or a car, have many steps along the way.
+The manufacturer of the final product doesn’t do everything itself;
+it sources from suppliers who in turn source from other suppliers, all the way down to extracting the raw materials.
+Just like physical goods have a supply chain, so do software and services.
+Modern applications aren’t written entirely from scratch;
+research indicates that 96% of applications use open source libraries, languages, frameworks, or other dependencies.footnote:[https://www.linuxfoundation.org/hubfs/LF%20Research/lfr_censusiii_120424a.pdf]
+
+_Software supply chain security_ is cybersecurity applied to the software supply chain — your _system delivery lifecycle_ (SDLC).footnote:[The system delivery lifecycle is also known as “system development lifecycle” or “software delivery/development lifecycle.” ”System delivery” is used in this book to denote the entire development, deployment, and management of technology systems that can include software as well as things that wouldn’t traditionally be considered software like network devices.]
+Systems that store your source code, compile your code, and distribute your software are in scope.
+Something like looking for a SQL injection vulnerability in your own code would fall under _application security_, but if you are trying to make sure you’re not pulling in vulnerabilities from third-party software, that falls under the scope of software supply chain security.
+As you can see, the SDLC is broad in scale which makes defining the boundaries complicated.
+To simplify it, you can ask “does this affect the development, delivery, or consumption of software systems?”
+If the answer is yes, then it falls under the umbrella of software supply chain security.
+
+==== Securing the SDLC
+
+Software supply chain security takes a holistic look at securing the SDLC and all its steps.
+Throughout this book we focus on the supply chain aspects, i.e. development and deployment steps, of the SDLC and don’t go into the project management, design, and others.
+The key steps and systems that are relevant to Software Supply Chain Security are:
+
+* Development
+* Source repository
+* Building
+* Publishing
+* Artifact repository
+* Deploying/consuming
+* Dependencies
+
+// TODO add figure
+
+==== The Bottom Turtle
+
+Software Supply Chain Security is also a recursive problem.
+If a supply chain compromise came from an external dependency, then those dependencies themselves can just as easily be compromised by their external dependencies.
+Due to this fundamental property of the supply chain, you need to apply supply chain security practices to the systems you own and operate and also verify that your dependencies do the same.
+This set of verifications can be done ad infinitum and leads to what is often called “the bottom turtle problem.”.footnote:[See The Bottom Turtle: https://thebottomturtle.io/Solving-the-bottom-turtle-SPIFFE-SPIRE-Book.pdf for more info.]
+
+Due to the nature of supply chain compromises affecting trusted systems within your network perimeter (and potentially the network perimeters of your upstream dependencies)  getting in through trusted systems, you must take a zero-trust approach.
+_Zero-trust_ is a fundamental principle of supply chain security establishing trust at levels and with parties that fit your risk appetite.
+This could be establishing a root of trust with your processor manufacturer and enforcing all software is signed with the _trusted platform module_ (TPM), or you could establish trust with software vendors you know personally and trust their identities through signing secrets like keys and certificates.
+
+==== Why “Software” Supply Chain Security?
+
+Throughout this book, we will refer to “software supply chain security,” however parts of what is discussed in the book deals with supply chain security throughout the entire information technology space.
+Most of the book will deal with software like that written in Go, Java, or Python.
+However, what we describe can be applied across the technology spectrum from infrastructure such as hardware servers and virtual machines to configuration as code — like Terraform and Kubernetes Config — and everything in between.
+The reason software” is used in relation to software supply chain security instead of a broader term, is due to the industry adopting that particular phrase.
+
+=== Supply Chain Impacts
+
+For as long as there has been civilization, there has been the need for supply chains, and for as long as there has been the need for supply chains, there has been the need to protect those supply chains from internal and external threats.
+This has included ensuring there’s food to supply the military and luxuries traveling trade routes.
+These supply chains have proven to be vulnerable to all sorts of negative incidents including direct attacks by bad actors, negligence, and natural disaster
+A common example throughout history of direct attacks against the supply chain are thieves and pirates.
+
+Even in contemporary times, shipping piracy is a huge burden with massive impacts on supply chains.
+The impact is not just the cost of the stolen goods but the opportunity cost of selling those goods;
+it’s the danger of sensitive intellectual property getting into the hands of bad actors, as well as the cost of navigating shipping through easier to secure waters. 
+
+==== Origins of Software Supply Chain Security
+
+Supply chain security as related to computing and technology is about as old as computing itself.
+During World War II, cryptography systems like the Enigma machine were becoming increasingly common to encrypt sensitive military communications.
+The Enigma machine was a physical device used by the German navy whose design had to be established early on, manufactured, and distributed across a large geographic region.
+The Enigma machine’s downfall was two supply chain related problems.
+The first was that many of the machines were intercepted in transit or taken as the result of Allied military action.
+Analysts examined these machines and found the second supply chain problem.
+Early computer scientists like Alan Turing discovered a critical issue in the Enigma machine’s design leading to its encryption being broken by the Colossus computer.
+This led to not just a single Enigma machine being compromised but all Enigma machines being compromised in a way that was hard to detect.
+Even if the compromise was detected, it would require a redesign followed by manufacturing of all new machines and then distributing them.
+The ability to decode encrypted German radio traffic gave the Allies critical information to avoid submarine attacks.
+
+Another early supply chain risk for computing was in another physical supply chain problem.
+All early computers used vacuum tubes as a key component.
+Unlike later transistor-based computers, vacuum tubes were a consumable item.
+The continued operation of computers relied heavily on a steady supply of vacuum tubes.
+The inability to replenish them meant an inability to run the computer and posed a huge risk to organizations whose operations relied on computers.
+
+Once computers became more reliable physically, no longer needing vacuum tubes, and software distribution became more prevalent, software trustworthiness became a key piece in supply chain security.
+The paramount importance of understanding your software and its dependencies became clear as part of Ken Thompson’s 1984 Turing Award Lecture, “Reflections on Trusting Trust.”footnote:[https://www.cs.cmu.edu/~rdriley/487/papers/Thompson_1984_ReflectionsonTrustingTrust.pdf]
+In his lecture, he highlighted the fundamental problem of securing IT systems:
+you can’t be sure of the security of a piece of software or system without also verifying the security of its dependencies.
+He highlighted it through some straightforward examples of a “Trojan horse” that lives inside the compiler and looks for patterns indicating it is compiling the login command.
+He would then have the compiler inject code at build time into the resultant executable that would allow him access to any system that used that malicious login binary.
+Since that login command would be potentially distributed to everyone using that operating system, it would be a broad compromise of all systems using that OS.
+He also highlighted how the bug in the compiler would be very difficult if not impossible to detect.
+If the affected compiler then compiled the OS it was intended to live on, the OS could cover up the tracks of the malicious compiler.
+He even finishes up with a warning that if this sort of attack happened against the hardware itself it would be ostensibly undetectable.
+
+Fast forwarding to contemporary times, Ken Thompson’s warnings have come true.
+Supply chain attacks grow with increasing frequency.
+The sophistication of what can be compromised continues to increase while the complexity of the attacks themselves become simpler.
+Three of the biggest contemporary supply chain attacks and vulnerabilities are the SolarWinds SUNBURST trojan, the Colonial Pipeline ransomware attack, and the Meltdown and Spectre vulnerabilities.
+
+==== SolarWinds SUNBURST Attack
+
+The SUNBURST supply chain attack against SolarWindsfootnote:[https://www.mandiant.com/resources/evasive-attacker-leverages-solarwinds-supply-chain-compromises-with-sunburst-backdoor] during 2020 is presumed to be performed by a sophisticated state-sponsored threat actor.
+This attack was based on a compromise against a single attack vector, the build system, to create a series of complex downstream compromises that impacted tens of thousands of SolarWinds customers.
+The malware, called “SUNSPOT”, was able to exist on build systems undetected for months.
+This malware listened for new builds of a tool called Orion to be run on the system.
+Once a new build was detected, it would modify the source code with malicious functionality right before the build itself started.
+This is almost the exact attack Ken Thompson warned about nearly 40 years ago.
+Since the build has been compromised at this point and it wasn’t detected, the compromised builds were signed by systems with valid signing credentials.
+
+Orion was a monitoring tool, meaning two things.
+First is that monitoring tools are often distributed broadly within an organization’s technology environment.
+In some cases, this could be all endpoints.
+Secondly, depending on how the systems were configured, Orion could have significant privileges on a system.
+
+This attack wasn’t replacing a single system’s Orion monitoring with the SUNBURST malware;
+this had the effect of compromising every system with the malware installed.
+This one attack vector was leveraged to further exploit systems, steal data, and move laterally across systems looking to infiltrate further via new attack vectors.
+This breach cost SolarWinds nearly $40 million as of September 2021.footnote:[https://www.sec.gov/Archives/edgar/data/0001739942/000173994221000154/swi-20210930.htm]
+Some have estimated that the total cost of remediation to customers could be over $100 billion.footnote:[https://www.govtech.com/security/solarwinds-hack-recovery-may-cost-upward-of-100b.html]
+Since the SUNBURST attack was discovered and remediated, SolarWinds has become a shining example of how to secure the software supply chain, following many cutting-edge security practices.
+
+==== Colonial Pipeline Ransomware Attack
+
+The Colonial Pipeline ransomware attack of 2021 shut down a critical oil pipeline in the United States for six days.
+The attack vector for the specific compromise is believed to be the theft of a single passwordfootnote:[https://www.reuters.com/business/colonial-pipeline-ceo-tells-senate-cyber-defenses-were-compromised-ahead-hack-2021-06-08/], potentially through something as simple as a phishing attack.
+This stolen password led to the injection of malware that compromised Colonial’s billing software.
+Uncertain if other, more operationally-critical, components of the pipeline were compromised, the operators of Colonial Pipeline shut down the pipeline out of an abundance of caution.
+
+This highlights another common characteristic of supply chain compromises: uncertainty about how much has been infiltrated.
+Without adequate trusted detective controls, there are limited ways to audit and discover the complete scope of the attack.
+This leads victims to shut down more than necessary, or worse:
+to leave some affected systems un-remediated.
+Colonial Pipeline paid $4.4 million in ransom to the attackers — about half of which was eventually recovered — however, the true cost of the attack is unclear.
+From a reputational perspective, it showed how poorly a major world power’s critical energy infrastructure holds up under cyberattack.
+It also exposed how these kinds of attacks can be exploited for terrorism, with some average citizens panic-buying gas leading to shortages.
+This had a domino effect leading to fear, uncertainty, and doubt about the stability of the energy supply chain.
+This further showed how easily these software supply chain attacks can have second- and third-order consequences to the physical supply chains that have broad-ranging national — and sometimes global — consequences.
+
+==== Meltdown and Spectre Vulnerabilities
+
+The Meltdown and Spectre vulnerabilities are two related hardware-based vulnerabilities discovered in 2017.footnote:[https://meltdownattack.com/]
+Meltdown affects nearly every Intel processor released since 1995, as well as some ARM processors.
+Spectre is a vulnerability that affects all processors that perform speculative execution during processing, which is almost all modern processors, including CPUs from Intel, AMD, and ARM.
+Though neither Meltdown nor Spectre were vulnerabilities injected into the hardware by a malicious actor, they are still potentially exploitable by attackers.
+Although they’re not in software, these are critical computing supply chain vulnerabilities.
+Meltdown can be mitigated using software, and Spectre is hard to exploit, with some ability to hardware patch, but fundamentally both vulnerabilities require the purchase of new, unaffected hardware in order to be truly remediated.
+
+Given the high level of complexity involved in the design and production of processors, there are still similar sorts of vulnerabilities being found in newer products, even though manufacturers fixed the specific mechanisms for Meltdown and Spectre.footnote:[https://arstechnica.com/gadgets/2021/05/new-spectre-attack-once-again-sends-intel-and-amd-scrambling-for-a-fix/]
+The knock-on effects of the Meltdown and Spectre effects was enormous.
+Though many of the attack vectors to exploit the vulnerability were patched in software, the patches imposed a sizable performance penalty on all processors affected.
+Some processors saw 15-25% decreases in performance for certain workloads.footnote:[https://www.extremetech.com/computing/291649-intel-performance-amd-spectre-meltdown-mds-patches]
+The total cost of replacing the hardware or mitigating it through software, and taking a performance hit, is impossible to estimate.
+
+=== The Goal
+
+The primary goal of supply chain security is building a more complete understanding of the supply chains that make up the systems and software you create and use.
+Through this more complete understanding, you can better protect your software, systems, and users by including only trusted dependencies.
+This prevents many categories of attack and gives you the data you need in order to take action.
+
+There are a set of common categories for supply chain security incidents:
+
+* Attack against or vulnerability in internal supply chain
+* Attack against or vulnerability in external supply chain
+* General attacks and vulnerabilities with consequences in the supply chain
+
+==== Attack Against or Vulnerability in Internal Supply Chain
+
+A vulnerability in your internal supply chain is a potential attack vector related to the components of the SDLC under the direct control of your project or organization.
+This includes components like the developer workstations, source code repositories, build systems, and artifact storage systems.
+It also includes content like software source code, infrastructure as code, and configuration as code.
+
+The goal when dealing with vulnerabilities and attacks against your internal supply chain is in making the vulnerabilities:
+
+* Easier to detect
+* Harder to exploit
+* Easier to respond to in the event of a successful attack
+
+==== Attack Against or Vulnerability in External Supply Chain
+
+A vulnerability in your external supply chain exposes your dependencies to supply chain attacks.
+Your external supply chain consists of all dependencies outside of your ownership and control.
+In other words, any code not written by your organization or project.
+Examples that fit the definition are:
+
+* Hardware like servers and network gear
+* Vendor and open source software
+* Software as a Service, and other cloud services
+
+The goal when dealing with vulnerabilities and attacks against the supply chains of your external dependencies involves better understanding of who is designing, coding, and building the components you use in your supply chain.
+You need to get the data that can build that understanding from your suppliers whether they are a multinational tech company with billions in revenue or an open-source project managed by a handful of volunteers.
+
+Attacks and vulnerabilities against your external supply are usually harder to detect and respond to because you often must rely on trusting third parties whose goals might not be aligned to your project or organization and whose security posture might not be as strong as yours.
+In addition, external components, such as software, in your supply chain are built by people not under your authority.
+You have only so much visibility into how closed source components are designed, written, and built.
+For open source, you have transparency into the code and how it is built, but performing due diligence, which often includes linting and scanning, can prove difficult to scale.
+Not every organization or project has the resources to perform rigorous linting and scanning of all software and packages that make up their supply chain.
+The same is true for the second-order (and beyond) dependencies, further complicating the matter.
+
+==== General Attacks and Vulnerabilities with Consequences in the Supply Chain
+
+Cyberattacks that don’t attack the supply chain directly could still be used as vectors into compromising your supply chain.
+A misconfiguration of a firewall in and of itself is not a supply chain attack, however exploiting that misconfiguration to gain access and eventually compromise systems related to the build transforms it into a supply chain attack.
+It is common for attacks to start off small, often against a single endpoint, and then to exploit external supply chain vulnerabilities exposed by that endpoint to gain escalated privileges or lateral movement between systems.
+An end goal, especially in the more sophisticated attacks, is leveraging eventual access into SDLC systems like the build to compromise an entire organization’s IT environment.
+
+=== The Recursive Problem
+
+The biggest issue in reaching the goals of Supply Chain Security is that it’s not enough to just build a better understanding of your software and dependencies, but you need to better understand your dependencies’ dependencies and so on.
+This recursive problem is often also called “solving the bottom turtle.”
+
+The bottom turtle refers to the mythological concept of the World Turtle who supports the world on its back.
+That turtle then is supported by another turtle underneath it, and then another, and so on to infinity.
+It is often used in computing to refer to the many areas where we as engineers and technologists rely on components not built by ourselves in our work.
+
+If you are a software developer, you rely on libraries you didn’t write, on a programming language you didn’t design, built using a compiler you didn’t create, on an operating system with millions of lines of code you didn’t produce, on a computer whose processors you didn’t make yourself.
+This is the fundamental recursive problem underlying the need for supply chain security.
+How can you trust what you didn’t create yourself?
+
+Solving the bottom turtle looks at what principles, rules, and best practices to identity so that you can better approach trust.
+As our approach to systems becomes more complex — with distributed systems and microservices, infrastructure as code, policy as code, etc. — the complexity around managing these systems also increases.
+This tradeoff in complexity has allowed projects and organizations to rely more on vendors and the open source community for the components they need to get their job done.
+Even within organizations, IT departments have drastically increased in size to deal with the demands of the ever-changing engineering needs to hit the goals of the organization.
+
+This acceleration of technological change across multiple industries and communities has led to a major complication.
+What used to be performed by one person or one team is now distributed across multiple teams, sometimes even multiple organizations.
+As time goes on, the number of external dependencies that new projects rely on increases to help deal with the increased complexity of modern technology.
+In the past, it was common for software to rely on less.
+Developer organizations used to run their software directly on physical servers they owned in data centers they controlled.
+However, that’s not so much the case anymore.
+Cloud computing, microservices, and other advancements have allowed us to increase feature velocity, reliability, and scalability at the cost of additional complexity.
+
+That complexity has increased the breadth of the supply chain security problem through the increase in the number of dependencies most projects use as well as the many new layers of transitive dependencies.
+In other words, the number of turtles between the systems and software you produce and underlying resources like the hardware increases significantly.
+
+=== Provenance
+
+A key solution to the recursive problem of Supply Chain Security — and one that has been missing — is provenance.
+_Provenance_ is a record of the history or origin of something.
+In the case of the food you order at a restaurant, it is the receipts of what distributors they bought their food from and what farms those distributors purchased from.
+In the case of software and other IT systems, these are things like git commit records to know who wrote your code and when, build logs to know how source code was transformed into runnable software, and _software bill of materials_ (SBOM) that shows what upstream dependencies you include in your systems.
+
+There are two key outcomes for provenance.
+The first is establishing a chain of custody for each step of your SDLC — from the developer writing the code to the build, publication and eventual deployment of your software and systems.
+The second is linking your supply chain to that of your upstream dependencies and — in the case where you distribute software to users — making it easy for users to link your supply chain.
+Thus provenance helps you better understand your supply chain while enabling any downstream users to better understand theirs.
+
+Provenance can come in many forms.
+It can include examples like:
+
+* Log files
+* Change management records
+* SBOMs
+* Cryptographic signatures and hashes
+* Build or continuous integration metadata
+
+In the case of log files, provenance records can contain a lot of information split into several categories.
+Examples include:
+
+* Build logs
+* Deployment logs
+* Monitoring logs
+* Runtime logs
+
+Provenance is very useful, but how do you know whether the provenance has been falsified in some way?
+Falsifying provenance is the act of manipulating provenance into not representing the truth.
+This can be done at provenance generation time.
+For example, if a build is compromised it could misreport its own build logs.
+In the case of change management, this could be someone falsely asserting that a review happened when it didn’t.
+In other situations, this could be someone or something manipulating the provenance data after it has been generated either while in transit or at rest in some datastore.
+
+One of the many mechanisms to ensure that the provenance is accurate and trustworthy is to ensure that provenance is generated by trusted identities.
+If you can prove that provenance came from a system you own and secured, or from a known good actor, it becomes easier to trust it than if you can’t determine where the provenance came from.
+
+=== Putting it all Together
+
+Generally, putting all the pieces together to secure your software supply chain simply entails generating and tracking trusted provenance recursively across your supply chain while simultaneously applying security best practices to your SDLC within a risk appetite that is appropriate to your organization or project.
+However, it is much more complicated in practice.
+
+As stated in the beginning of this chapter, software supply chain security is just cybersecurity applied to the SDLC.
+However, unlike a cybersecurity attack against a single system, the scope of what is affected in a supply chain attack is nearly unbounded.
+It is also difficult to track what has been affected when performing an investigation due to these attacks compromising SDLC software and systems you rely on to accurately report genuine information.
+Think of an example like a monitoring agent on a privileged system.
+It has privileged access, but how did that agent get on that system?
+Is it the same one that you had approved?
+You need to be able to answer these questions, but — given that the monitoring system has been compromised — how can you guarantee it is reporting accurate information?
+
+==== Secure Software Factory and Binary Authorization
+
+There are two major systems that help answer these questions.
+The first is a secure software factory.
+The second is binary authorization.
+
+A _secure software factory_ is a system intended to securely ingest trusted source code and dependencies, securely build software, and securely publish the packaged resultant artifacts.
+Throughout this process, the secure software factory generates provenance at every step and validates the provenance from the previous steps.
+
+_Binary authorization_ is the process by which you look at the provenance provided to you by a secure software factory or other approved mechanism and decide whether you trust that system or software within your risk appetite.
+This binary authorization assertion can be understodd as applying security and other policies against your SDLC to determine what you as a project or organization see as being safe and secure to be deployed or consumed downstream.
+Binary authorization can then be validated by deployment systems as well as any other downstream user before deployment or ingestion.
+
+These two systems combined with applying general cybersecurity best practices help solve the supply chain security problem.
+Nothing is perfect, however.
+In order to be as successful as you can be in protecting your own supply chains, you must rely on the tech community to protect the supply chain.
+In almost all cases, systems and software supply chains are interlinked with open source and vendor-provided components.
+Those components rely on other open source and vendor-provided components and so on.
+The turtles are back.
+
+==== Applying the Practices
+
+When creating the systems and applying the best practices, you need to secure your supply chain based on your risk appetite.
+There is no limit to the amount of provenance you can generate, nor scans and other security tasks you can perform — both on things within your internal supply chain as well as dependencies you pull in from external supply chains.
+Similarly, there’s no limit to how far down you validate the supply security in the layers of your systems.
+Do you check only your first layer dependencies, or do you follow that as far down as you can go?
+Do you ensure the security of the supply chain of just your application, or do you also check the platform your application runs on, the OS the platform lives on, and the underlying hardware all of it sits on?
+
+These are all important questions to ask.
+They also become increasingly more expensive to answer the deeper you go in your supply chain.
+It will require collaboration with your upstream software and system providers.
+It will require understanding the risk and cost of supply chain compromise.
+Each project and organization has to determine what their risk appetite is.
+When applying the practices and implementing a secure software factory and binary authorization, there will be multiple steps you can take, some of which can be quite intensive from a security sophistication perspective and in some cases expensive both in time and in money.
+If you are protecting a static marketing website from being defaced, you will most likely have a different security posture compared to projects that interact with your customer data.
+As more projects and organizations in the industry begin to follow these practices to generate provenance in secure ways, the overall burden will go down for everyone and it will become easier and cheaper to become more rigorous in securing the supply chain.
+
+// TODO Add figure
+
+=== AI and Configuration Management is in the Supply Chain Too
+
+Software supply chain security is not purely about web applications, command line tooling, and other things most often thought of when referring to software.
+Artificial intelligence (AI), configuration management, and anything else that is part of the operation of information technology systems is part of the software supply chain.
+In general, you should treat them the same way you would treat any other piece of code or artifact.
+Throughout this book, most concepts, techniques, etc. that can be applied to generic software can be applied to configuration management, AI, and other things that are in information technology environments.
+There will be a few call outs in the book where a particular concept, technique, or tool applies specifically to one part of the supply chain instead of being more broadly-applicable.
+
+==== What can go wrong in the AI supply chain
+
+The AI supply chain can have all the same problems as the general software supply chain.
+This becomes even more important when we look at how the supply chain for something like a large language model (LLM) or machine learning (ML) model fits into the broader set of software and systems within a project or organization.
+
+Let’s look at a simple example of an organization looking at AI models for helping them make decisions.
+Let’s say we have a bank or another financial institution looking to use AI models to help them understand and predict loan risk.
+There are regulations around what factors a bank can use in approving or denying a loan for someone.
+For example, in the United States there are regulations around creditors not being able to use certain protected categories like race, sex, national origin, etc. as the basis of denying someone a loan.
+When it comes to an AI model, the bank will want to both understand the supply chain of that AI model’s software as well as the supply chain of the training data for that model in order to feel safe in the security of it as well as feeling confident that the AI has not been trained to be biased in a way that could cause a legal or regulatory headache in the future.
+
+We are already starting to see suspicious activity in the broader technology ecosystems around AI.
+Some research has been done to show that open source AI software and models have an inverse correlation between their security posture and their popularity.
+In other words, the more popular the open source AI software or model is, the less secure that AI actually is.footnote:[Yotam Perkal, Rezilion Exploring the LLM OpenSource Security Landscape presentation at OpneSSF Day Europe 2023. https://static.sched.com/hosted_files/openssfdayeu2023/be/LLM_OpenSource_Security_OpenSSFDayEU2023%20%281%29.pdf]
+We are also seeing that multiple open source AI models have been trained on potentially illegal or unethical data that exposes all of its users to legal or regulatory liability.
+There is a bright future for AI but much more must be done, especially in the supply chain, to ensure its safe and secure usage.
+
+==== What can go wrong in the configuration management supply chain
+
+Configuration management tools like Ansible, Terraform, Chef, Puppet, or even the configuration file for your software like `httpd.conf` for the Apache HTTPD web server are also part of your supply chain.
+All of your software supply chain security work will be for nothing if you use vulnerable or malicious configuration that exposes your IT systems to attack or compels them to operate maliciously.
+
+Let’s use that bank example again to explore an example of what could happen if you use a vulnerable or malicious configuration when deploying new software and how it can compromise your systems.
+The bank is looking to deploy a new version of their loan risk application to a production environment. They use Terraform, a common configuration management tool, to deploy the infrastructure for their applications.
+They then use Ansible, another tool to deploy and configure software on the infrastructure set up by Terraform.
+They use modules and templates for Terraform and Ansible that come from open source maintainers as well as some modules that come from vendors.
+The modules can have vulnerabilities similar to a typical piece of software, like OpenSSL.
+The templates can have the wrong input values, like port numbers, exposing the software and infrastructure to attack.
+
+Configuration management code and artifacts can expose folks to supply chain attack or compromise, but can also be used to mitigate software supply chain attacks.
+For example the log4shell vulnerability from 2021 could be mitigated through certain configuration management that ensures the vulnerable code paths are not exposed via the network or that the vulnerable features are disabled.
+
+=== Summary
+
+* Supply chain attacks are increasing in frequency and the costs associated with these attacks are also increasing.
+* Supply chain security means securing your SDLC and only allowing the deployment of systems and software that are supplied by trusted providers and only include dependencies supplied by trusted providers.
+* Supply chain security is about understanding your project or organization’s risk appetite and understanding how deep you need to embed security into your supply chain.
+* Supply chain attacks and vulnerabilities are not new. They have a long history in and outside the technology world.
+* Supply chain attacks and vulnerabilities can affect multiple systems, sometimes an entire organization or multiple organizations’ IT environments.
+* Software supply chain attacks can impact the physical supply chain.
+* Attacks and vulnerabilities affect both your internal supply chain i.e., what your project or organization creates as well as your external supply chain i.e., what your project or organization relies on that is provided by external sources like vendors and open source projects.
+* Supply chain security is a recursive problem. Your dependencies also have dependencies and need to be considered.
+* Provenance is a key piece of the supply chain security solution. By establishing and verifying where software and systems come from you can better understand how safe and trustworthy they are.
+* The way to deal with the recursive supply chain security problem and establishing provenance is through building a Secure Software Factory and providing a mechanism for generating and validating Binary Authorization.
+* We are all in this together. Supply chain security relies not just on you acting, but the industry and community in acting to better protect the world’s global systems and software supply chains
+* Each project and organization will have their own risk appetite and how much time and resources they will be willing to spend to improve the security posture around their supply chain. 
+* AI, configuration management, and other content that is part of your IT systems are also part of your supply chain and need to be part of the supply chain security story.
