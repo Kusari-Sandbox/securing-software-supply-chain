@@ -4,8 +4,14 @@
 [glossary]
 application security::
     measures to prevent or address vulnerabilities in an application's code
+attack tree::
+    a diagram listing an attacker’s goal and the paths of attack vectors that achieve the goal
 binary authorization::
     a process for determinding trust based on the provenance provided to you by a secure software factory or other approved mechanism and decide whether you trust that system or software within your risk appetite
+detective controls::
+    security measures that help inform or alert you when an attack is in progress or has been successful
+preventive controls::
+    measures in place to make exploitation of an attack vector harder
 provenance::
     a record of the history or origin of something, including the intermediate steps
 secure software factory::
@@ -18,6 +24,8 @@ software supply chain security::
     cybersecurity applies to the software supply chain
 system delivery lifecycle::
     (or software development lifecycle) the development, delivery, or consumption of software systems
+threat modeling::
+    the process of analyzing systems to idenify risks mitigation approaches
 trusted platform module::
     a dedicated computer chip for storing and protecting sensitive information
 zero trust::

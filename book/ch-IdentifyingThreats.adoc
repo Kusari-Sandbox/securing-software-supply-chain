@@ -1,0 +1,609 @@
+== Identifying threats
+
+This chapter covers:
+
+* Understanding the system delivery lifecycle
+* Learning what Threat Modeling is
+* Identifying threats in your software and systems, including supply chain threats
+* Calculating risks against the assets you want to protect
+
+As you learned in chapter 1, the system delivery lifecycle (SDLC), sometimes known as the software development lifecycle, is the process by which systems, including software, are developed and delivered.
+This process can be short or long depending on the needs of an individual project or organization.
+Since the SDLC is such a critical process that involves the development of software, it is a prime target for attack.
+These attacks that target the production and consumption of software are the definition of supply chain attacks.
+
+=== Overview
+
+The SDLC itself is also a process that is separate from what is traditionally considered project planning, for example Agile vs. waterfall.
+Your SDLC should support any project planning methodology, or planning style;
+the only difference you would see from the perspective of the SDLC is how quickly you iterate through the process.
+For example, if you are running a large waterfall project you might expect your SDLC loop to take months to years.
+For a smaller Agile project iteration, your loop through the SDLC might be measured in days or weeks.
+
+The SDLC as a process consists of multiple phases with feedback from the last phase looping back into the first phase during the next project associated with an organization or initiative.
+For the purposes of this book, the phases in order are:
+
+1. Planning
+2. Analysis
+3. Design
+4. Implementation
+5. Maintenance
+
+// TODO insert figure
+
+Be aware that these phases aren’t standardized in the broader technology community — some of the phases might have different names.
+These phases are also sometimes split up differently with some of the phases listed above being split into multiple phases and in other cases, two phases are merged.
+The same goes for tasks within any one phase:
+sometimes tasks in one phase are part of a different phase depending on the organization or project’s flavor of SDLC.
+
+==== Example SDLC Flow
+
+===== Planning
+
+Imagine for example you work at a big bank developing some new online banking software from scratch.
+First you need to plan the project.
+Approximately how much money will the online banking software take?
+What are the timelines for releasing the software?
+Does it make sense to write new software or buy something off the shelf? Who will use it?
+Why?
+
+===== Analysis
+
+After the initial planning you will need to perform analysis on what features are required for the online bank application.
+This can include features like dashboards for showing account information and tools to help users pay bills.
+Features don’t have to be directly user-facing.
+For example, security features like strong password requirements or other non-functional requirements like 100ms response times.
+
+===== Design
+
+You will need to then design the software with the features that you require in mind.
+This design work often includes choices like what programming languages, frameworks, and libraries to use.
+You will also want to include or draw up what the graphical user interface (GUI) of the online banking software might look like.
+
+This phase also includes creating diagrams for the software architecture and other documents like process flow diagrams.
+You also design for the operations of the software.
+What happens when the application goes down?
+How will it be monitored and maintained?
+
+This is also a key point in the development of software when security is considered.
+When building out the architectural diagrams and figuring out the operations of the software security must also be involved to understand how to protect both the and the customer end users of the software.
+You should describe how your application interacts with security focused systems like those used for identity and access management (IAM) in order to ensure that users are both logged in to systems as well as unable to see account data for other users.
+
+===== Implementation
+
+Next up is implementing what was planned and designed for in the previous steps,in other words the actual writing of code that makes up the software of the application.
+This is what some folks mistakenly consider “software development.”
+Software development consists of much more than that, which is why this section is often just referred to as implementation.
+It is the phase where you take the designs and turn them into running code in a production environment.
+This means there is a flow between a software developer writing code through development, build, quality assurance (QA), staging and other environments followed by a deployment into one or more production environments.
+This is the phase where most of the work usually happens.
+
+Implementing online banking software will include tasks like:
+
+* Writing code to implement designed features
+* Writing tests to validate code correctly implements features
+* Writing infrastructure as code to deploy servers to run completed software on
+* Writing configuration as code to configure systems and software
+* Writing policy as code to enforce security, administrative, legal, and other organizational rules on your code
+* Building software and systems in CI pipelines
+* Deploying software in continuous delivery (CD) pipelines
+* Deploying software to all required environments such as development, QA, staging, user acceptance testing (UAT), and production
+
+For example, in the previous phases you defined a banking account dashboard and designed that dashboard to have various features and other requirements like enforced data security around access to bank account information.
+During the planning phase you chose to use Java and SpringBoot.
+You will need to write Java code and use the SpringBoot framework to build the features for your application.
+You will need to write tests in a framework like Junit to validate functionality.
+You will have to write infrastructure as code to run in tooling like OpenTofu in order to ensure you have server resources to run your application.
+You will need to write configuration as code in something like Ansible or Kubernetes configuration YAML in order to adequately configure the software you wrote on the systems and platforms you are deploying the software to.
+You will need to ensure all the software is built and deployed through CI and CD systems.
+
+===== Maintenance
+
+The final phase that wraps up the SDLC is maintenance.
+This is the phase where the systems and software you built in the previous phases are operated, monitored, and maintained.
+The maintenance phase includes tasks like evaluating the logs for anomalous behavior, responding to alerts, dealing with security incidents, and making minor modifications to configuration or software.
+For the banking software you deployed in the previous phase, maintaining the systems it uses is extremely important.
+Online banking software going down or being compromised in some way would have repercussions to end users who are using it to pay their bills and have access to their money.
+Also during this time, stakeholders are collecting feedback and using the data collected by user surveys, monitoring and other methods to inform them decisions around new SDLC iterations which would then feed back into the planning phase.
+
+The various phases of the SDLC create a feedback loop where software is architected, written, and deployed.
+The process is a prime target for cyberattacks as it’s easy for that loop to be exploited in hard to detect ways which give an attacker significant ability to cause harm.
+The bulk of this book is focused on the implementation phase as that’s where most supply chain attacks happen and where most of the technical effort is spent in securing the supply chain.
+With that stated, the rest of this chapter gets into how the individual phases of the SDLC are supposed to work with the various actors — in other words people involved in the process — and steps in the phases.
+We will then explore how actors both internal or external to your project or organization can either inadvertently or on purpose compromise the supply chain.
+This will help later in exploring how you can protect against those attacks.
+
+=== The Threat Modeling Process
+
+When exploring how to approach securing your SDLC and therefore securing your supply chain you need to think about threat modeling.
+_Threat modeling_ is the process of analyzing your systems to determine what the risks are and how to approach mitigating those risks.
+The systems could be physical IT systems like server hardware and network devices.
+They could be virtual IT systems like applications and operating systems.
+They could also refer to non-IT systems that could still be related to your organization, like security processes for physical access to a data center or an organization’s hiring policies.
+
+Imagine you work at a bank and you are trying to secure your online banking application from cyberattack.
+You want to be able to dive into your system and understand what people are involved in the development and operation of the online banking application like software engineers and project managers.
+You want to also understand what the components of the application are, like server hardware and application packages.
+You also want to determine what the external dependencies are like other services’ APIs and libraries the application depends on.
+
+Once you have a good understanding of how your system is laid out you want to figure out who might purposefully or inadvertently cause compromise in your system and to what parts of your system this compromise would happen.
+This can be a software engineer who purposefully writes malicious code.
+It could also be a software engineer with inadequate training or guardrails who makes a mistake and introduces a security bug in the software.
+The people who might compromise your system could be external to your project or organization.
+For example, the software engineer of a library you depend on could maliciously write code or mistakenly introduce a security bug in that library.
+
+After identifying where your system is at risk of compromise and by whom, you want to figure out how to defend against those risks through mitigating measures.
+In the case of defending against security risks in the online banking application software, this could be introducing something like code review by one or more engineers to catch bugs and malicious code.
+In the cases of external risks like third party software libraries this could involve security scans or checking the libraries against vulnerability databases like the Common Vulnerabilities and Exposures (CVE) database.footnote:[https://cve.mitre.org/]
+
+There are multiple approaches to threat modeling and entire books have been written on the subject so we won’t be getting to all the different methods, however this chapter will provide an overview and key details that are important when thinking about threat modeling for securing your supply chain.
+The Open Web Application Security Project (OWASP)footnote:[https://owasp.org/www-community/Threat_Modeling_Process] and National Institute of Standards and Technology (NIST)footnote:[https://csrc.nist.gov/CSRC/media/Publications/sp/800-154/draft/documents/sp800_154_draft.pdf] have good documentation on different threat modeling processes and frameworks.
+
+For our purposes, a simplified threat modeling process consists of three steps. 
+These steps often have different names but in this book we will use:
+
+* Understanding the System
+* Identifying Threats
+* Determining Mitigations
+
+// TODO insert figure
+
+Figure 2.2 shows a simple threat modeling approach where you first understand the system through building a model of that system through diagrams and documentation to build the knowledge you need.
+Then you identify threats in the system you modeled.
+You do this by identifying where uour system can be attacked and what the impacts of those attacks might be.
+Finally, you determine mitigations which is the step where you prioritize designing security measures to defend against the most likely and most impactful attacks.
+Most of the rest of this chapter will be focused on detailing how to apply this simplified threat modeling approach.
+
+=== Understanding the System
+
+Understanding the system is the step of the threat modeling process where you do a deep dive into the “who” and “what” that makes up your system.
+In the case of the online banking application you’ve been building, the “who” are the people involved in the development, operation, and use of the online banking application.
+For example, this would be software engineers who write the code, site reliability engineers (SREs) who help keep the application running, and the customers who use the application.
+The “what” that makes up your system are components and data like the application package, the servers the application runs on, and the banking customer data.
+
+In addition to the who and what inside your system, you need to also consider the external elements that your system interacts with.
+This includes other systems like APIs and databases that are not directly part of the system you are building.
+For an online banking application, this would include other systems made by the organization like customer information databases and transaction processing services.
+It can also include systems external to the organization like vendor payment processing APIs.
+
+When building out the understanding of the system, you have to consider the interactions between the people, components, data, and external services.
+How do people interact with the components and how do the components interact with each other?
+Other questions like “how does data flow throughout the system?” will need answers as well.
+For the online banking application, this means you must figure out not just who uses the application, like customers, but also understand how those customers use the application.
+You can’t just identify what other systems the online banking service relies on, but how it relies on them.
+
+This allows you to think through how you model your application.
+For the online banking application, you need to figure out what the key components and data are — like the Internet facing application servers and the customer data you want to protect.
+You need to determine what assets make up the system, in particular components and data you care about.
+This is referred to as identifying the assets in the system.
+
+While you dentify the assets in the system, you also need to understand who within your project or organization is allowed to build and operate components such as the online banking application server, and who will have access to critical data like the customer information.
+This would be folks like software engineers who write the code.
+You aslo need to identify the internal authorized actors in the system.
+
+In addition to identifying the actors and assets in the system, you need to understand what other systems interact in some way with our online banking application.
+This can be things external to the system at hand but still internal to your organization like banking transaction APIs.
+It can also be things external to your organization altogether like external payment processors.
+This can be referred to as identifying external systems.
+
+Like how you look at the internal actors involved, you also need to figure out what external actors have access to your banking application.
+The most common authorized external actor in this example would be the end user customers of the bank.
+Other actors could be software developers that work at authorized vendors who build software that uses or is used by the online banking application.
+In other words, you need to identify the external authorized actors using the system.
+
+Finally, you need to ensure you understand how the various components and external systems interact, as well as how both the internal and external actors interact with the components in the online banking application system.
+This would be things like how customers are expected to use the application and how the application server my interact with databases.
+
+It should also be noted that throughout these tasks there will be times you go back and forth between them.
+While identifying how the actors and assets interact in the system and with external systems for your online banking application, you might realize you forgot about database administrators or about a separate API for external vendors.
+These tasks are split out the way they are for the sake of clarity around the scope and purpose of the individual tasks. 
+
+To summarize the key tasks that must be performed when understanding the system are:
+
+* Identifying the assets in the system
+* Identifying the internal authorized actors in the system
+* Identifying external systems
+* Identifying the external authorized actors using the system
+* Identifying how the actors and assets interact in the system and with external systems
+
+Now you can take a closer look at each of the tasks described briefly above.
+This closer look will give you a better understanding of why you need to perform these tasks, as well as how you can perform these tasks.
+
+// TODO insert figure
+
+==== Identifying Assets in the System
+
+Identifying the assets in the system is the task in understanding the system where you determine what you are trying to protect.
+This is usually the components of the system like running software and server hardware.
+It also includes the data you want to protect, whether that data is at rest in a database or in transit being sent between components and systems.
+For the online banking application, this would include components like the Java packages running on the servers as well as the servers themselves.
+In the case of VMs, this would be both the VMs that are running the application as well as the underlying hardware if that hardware is under your ownership.
+In the case where you are running an application in a cloud you don’t operate, the underlying server hardware running the VMs would be considered an external system.
+In addition to the components that make up the online banking software, you need to consider the data used or stored in the system.
+The data consists of customer banking account information such as money stored in accounts, customers’ personal information like their addresses, as well as data relating to third party vendors like external payment providers.
+When determining what assets make up your system, keep it simple:
+consider anything not falling directly under the scope of your system to be external.
+It is important to keep a tight scope when modeling what assets make up your system because it’s easy to pull in more things than you need to, especially those that you don’t have control over the building or operation of.
+
+==== Identifying the External Systems
+
+The next task in understanding the system is identifying external systems.
+This is where you figure out what other systems your systems interact with or rely on, and what external systems rely on your system.
+You have to figure out what systems you rely on that you don’t own and control.
+This could be systems external to your organization, like third party vendor systems, or it could be any system that might fall under your organization or even team but for organizational purposes is considered separate, like a separate application you own that interacts with the one you’re threat modeling.
+For the online banking application this would be third party payment processors and various other transaction systems internal to the bank but outside of the direct scope of the online banking application itself.
+
+==== Identifying the External Authorized Actors
+
+Not only do you need to identify the external systems that interact with your system but you also need to identify the external authorized actors to your system.
+This means you need to understand people who are both internal to your organization but external to the building and operation of the system itself, like internal software engineers who develop against your APIs or auditors who work for your organization.
+You also need to take into consideration people who are external to the organization but should have access to the system like the end user customers, third party partners, and vendors.
+At this time you shouldn’t spend a lot of time considering unauthorized actors who might be accessing your system without legitimate authorization.
+That is for another step.
+
+For the online banking application example, the authorized external actors can include employees of the bank and actors that are external to the organization itself, like legitimate banking customers, partners, and vendors.
+Bank employees who you should consider external include compliance auditors, engineers who work on tools that interact with the system, and others who interact with the application but are not involved in building or operating it.
+
+==== Identifying Interactions
+
+Identifying how the actors and assets interact in the system and with external systems is usually the last task taken when understanding the system.
+Throughout the previous tasks you build out a generic understanding of how the internal and external systems, assets, and actors interact with each other.
+However, the full understanding can’t be refined until you have figured out all the actors and assets that make up the system and its interaction with external systems and actors.
+This consists of understanding how assets within your system interact with each other and how they’re built and maintained by authorized actors.
+This also means you need to build an understanding of how those assets interact with external actors and systems.
+
+For the online banking software this means you need to understand not just the fact that software engineers write the code, but how their code turns into  running software.
+It means understanding how customers use your application during normal operation.
+The customer wouldn’t access the database containing their banking information directly;
+they interact with a front-end UI via a mobile or web application that then calls an application server which handles transactions to backend banking services and databases.
+
+// TODO insert figure
+
+Figure 2.4 shows a simplified model of understanding the system for the online banking application example.
+This diagram should not be taken as a realistic model of an application, but it helps demonstrate what some of the assets within the online banking system would be, what actors operate with the system, and external systems.
+In a real scenario, you might have dozens of internal and external assets as well as multiple internal and external actors to the system.
+A good practice is to try and keep it simple, focused on the components that interact closely with the core components and data of your system.
+This means you shouldn’t model the components of external systems and think of them as an opaque box and only model the interaction with those systems.
+
+.Exercise 2.1
+****
+Imagine you are building an application model for a new online storefront. The model consists of:
+
+* Software engineers
+* Database engineers
+* Web front-end server
+* Application back-end server
+* Store database
+* Customer information
+* Store inventory information
+* External advertising service
+
+What would a Web Front-End Server be considered in the threat model?
+
+[loweralpha]
+. Component Asset
+. Data Asset
+. Authorized Internal Actor
+. Authorized External Actor
+. External System
+****
+
+=== Identifying Threats
+
+Once you have modeled your system through the understanding the system step, you then need to model the threats to the system.
+The identifying threats step is the part of the threat modeling process where you develop an understanding of how the different assets within your system can be attacked, compromised, or — in the case of data — stolen.
+At a shallow level, these attacks and compromises can come from internal components, external systems, internal actors, or external actors.
+At a deeper level however, all attacks and compromises fundamentally are due to actors.
+Systems and components can’t compromise themselves.
+
+To continue your work building out a threat model for an online banking application, you need to perform analysis on the application model you built in Figure 2.4.
+You need to ask questions of our model like “how is the connection between the banking application aerver and customer satabase secured?”
+When you answer these questions, you can better understand the most likely attack vectors — the means by which an attack happens.
+Assuming for a second that the customer database connection is not secured through some sort of mutual authentication mechanism like mutual transport layer security (mTLS), this could be a path for an attacker to access the customer database and steal or modify customer data.
+This then feeds into the next step — determining mitigations — for determining what to do about these attack vectors, if anything.
+
+It’s not just network issues to worry about either.
+Attacks can take many forms.
+For example, the banking application relies on various software dependencies like open source and vendor libraries, as well as other things like the operating system and, if it runs on a VM, the hypervisor.
+Any one of those elements in the banking application’s supply chain could be attacked and exploited.
+
+During the identifying threats step, you also need to build an understanding of the value of the assets you are trying to protect and the impact of an attack or compromise.
+The value of an asset might change given the situation.
+For example, an outage of a system component will probably have a different cost compared to that component being infiltrated and its operation being modified for an attacker’s purpose.
+The cost associated with a potential attack will also depend on the attack vector.
+An attack vector that leads to a compromise that only allows ead access to a system component will most likely have a different cost compared with an attack vector that leads to administrative privileges on a component.
+
+You want to answer a few questions with follow-ups regarding the value of your system and the assets:
+
+* What is the value of the system’s normal operation?
+    * What is the impact due to interrupted operation?
+    * What is the impact of access compromises at different access levels, like read-only, root access, etc.?
+* What is the value of the data owned and managed by your system?
+    * What is the value of the data that transits through your system coming from external systems?
+* What is the cost of a given external system’s compromise?
+    * What is the value of the data that flows to external systems?
+    * What is the impact of a given external system’s interrupted operations?
+
+Sometimes you can put an exact amount of money, but sometimes you need to estimate the monetary cost of an asset compromise depending on the situation.
+In many cases the cost comes in hard to quantify harm like reputational, legal, or compliance risk.
+If your system gets compromised will your customers trust you anymore?
+If your system gets compromised can your organization or project be sued?
+In the case of projects and organizations operating under regulations, will a compromise lead to non-compliance with those regulations?
+These types of non-money related costs will have to be considered as well.
+
+For the online banking application you have been threat modeling, your customer data will be extremely valuable and the cost of it being stolen would have operational costs, reputational costs, legal costs, and potentially others.
+The same goes for the online banking application itself.
+If the application software goes down, there will be impacts to your customers as they will be unable to make online banking transactions.
+This potentially has more immediate costs as the bank would collect less in fees from customer usage of the application.
+
+For our purposes, the identifying threats step of threat modeling consists of just two tasks:
+
+* Identifying attack vectors
+* Identifying impact
+
+==== Identifying Attack Vectors
+
+Identifying attack vectors is the step where you formally lay out different points of attack that can lead to compromise.
+An attack vector is separate from an actual attack.
+An attack consists of the exploitation of one or more attack vectors that causes some impact.
+One important thing to keep in mind is that an attack does not imply intent.
+For the purposes of threat modeling (and cybersecurity in general), an attack can be purposeful or inadvertent.
+A purposeful attack comes from someone usually referred to as a bad or malicious actor.
+An inadvertent attacker is an actor who unknowingly exploits an attack vector.
+This can be someone who ends up with access in an application to elements they shouldn’t have access to, and they are unaware they shouldn’t have access.
+Attackers can be internal or external authorized actors like those you included in your application model, or they could be unauthorized actors, for example hackers.
+
+[TIP]
+.Attack vector frameworks
+====
+There are multiple ways to list scenarios detailing attack vectors, with multiple frameworks and schemas that are beyond the scope of this book.
+We highly recommended you use a framework for threat modeling and laying out your attack vectors that fits your specific organization or project’s needs.
+For now, we’re going to keep it simple and just outline straightforward attack scenarios, but be aware the real world rarely is that simple.
+
+You can check out the MITRE ATT&CK (pronounced: attack) Frameworkfootnote:[https://attack.mitre.org/] and NIST Cybersecurity Framework (CSF)footnote:[https://www.nist.gov/cyberframework] for two of the most popular frameworks.
+====
+
+// TODO insert figure
+
+===== Example: Identifying Threat Vectors
+
+Given that the banking application server is the entry point into the system, let’s start with that first.
+Here are some example scenarios of normal operation followed by the attack vectors that help a malicious attacker achieve their goals, or by which an inadvertent attacker might compromise the system via a mistake.
+These are simplified compared to real scenarios but should be capturing all the important bits.
+
+.Attack vectors for online banking application
+****
+**Summary:**
+The source code of the online banking application is an asset that is important intellectual property of the bank.
+When packaged and running on an authorized production system, the application has elevated access to multiple components and systems with customer and other important banking data.
+
+**Process Flow:**
+
+. Software Engineer writes source code on their workstation
+. Software Engineer commits code and pushes it to internal Git repo
+. Other Software Engineer reviews and approves code
+. Continuous Integration (CI) Pipeline is triggered to run build.
+. CI Pipeline builds, scans, tests and packages software.
+. CI Pipeline publishes packaged software to online banking application artifact repository.
+. Continuous Delivery (CD) Pipeline is triggered by artifact repository being published.
+. CD Pipeline deploys code to Quality Assurance (QA) environment.
+. Automated QA tests are triggered by deployment as well as additional QA tests are run by QA team.
+. QA Team approves promotion of online banking application package for production deployment in change management system.
+. Stakeholders approve promotion of online banking application packages in production deployment
+. Change management system triggers CD Pipeline to deploy to production environment.
+. CD Pipeline performs deployment to production environment
+
+**Assets and Systems Involved:**
+
+* Software Engineer Workstation
+* Git Repository and Version Control System
+* CI System
+* Build, Scanning, and Packaging System
+* Artifact Repo System
+* CD System
+* QA Environment System
+* Change Management System
+* Production Environment System
+
+**Authorized Actors:**
+
+* Software Engineer
+* QA Engineer
+* CI/CD Engineer
+* Stakeholders
+
+**Assets to be Secured:**
+
+* Source Code
+** Storage: Developer workstation, Git repository, CI environment temporarily
+** Transit: HTTP over TLS and SSH between workstation and git repository as well as CI environment.
+* Packaged Software
+** Storage: Artifact repository, IT environments (Dev, QA, Production), CI and CD environment temporarily.
+** Transit: HTTP over TLS between artifact repository, CI and CD environments. Also HTTP over TLS between CD environment and IT environments.
+* Customer Data
+** Storage: Not stored in online banking application itself
+** Transit: Utilized by online banking application
+
+**Attack vectors:**
+
+* Software Engineer Workstation
+** Unauthorized actor gets physical access to the workstation.
+** Unauthorized actor gets remote access to the workstation.
+** Authorized software engineer accesses unauthorized systems from their workstation
+* Git repository
+** Unauthorized actor manipulates DNS to point to his malicious server. He must also steal the certificate and other secrets for the Git repository.
+** Unauthorized actor gets permission to source repo.
+** Authorized software engineer with review rights approves source code without performing the review or purposefully approving known malicious code.
+* CI/CD systems
+** Unauthorized actor manipulates DNS to point to his malicious CI/CD system. He must also steal the certificate and other secrets for the CI/CD system.
+** Unauthorized actor gets access to manipulate the CI/CD System’s pipelines
+** Authorized engineer with access to modify the CI/CD pipeline outside of normal approval processes
+** Build, scanning, and packaging system
+** Unauthorized actor gains access to publish build scripts
+** Authorized actor pushes build scripts outside of normal approval process
+* Artifact repository
+** Unauthorized actor manipulates DNS to point to his malicious system. He must also steal the certificate and other secrets for the Artifact repository.
+** Unauthorized actor gets permission to publish artifacts.
+** Authorized administrator of Artifact repository publishes artifact directly to repo.
+* QA/production environment systems
+** Unauthorized actor manipulates QA/Production environment DNS to point to unapproved systems he has spun up
+** Unauthorized actor gains access to servers within the QA/Production environment
+** Authorized actor to QA/Production environment uses it to connect to unapproved systems or for unapproved purposes
+* Change Management System
+** Unauthorized actor gains approval access to system
+** Authorized actor doesn’t follow established rules for approval
+
+****
+
+It should be noted that the actors involved could be authorized and purposefully or inadvertently attacking the system, or they could be unauthorized malicious actors.
+With the simple example, it’s useful to separate unauthorized and authorized actors.
+In more realistic examples, it’s useful to list out all the ways a potential system could be attacked.
+This means you don’t just list that an unauthorized actor gets access to a software engineer’s workstationm but also include all the ways they could get access: stealing credentials, accessing an unlocked PC while the authorized engineer is away from his desk, using malware to hijack the workstation, etc.
+Also, if your workstation is accessible via something like remote desktop, it would be vulnerable to being attacked remotely.
+
+==== Identifying Impact
+
+Now that you know the different types of attack vectors that can be use against a project or organization, you can take a deeper dive and perform an asset-by-asset analysis identifying attack vectors and how easy or difficult those attack vectors would be to exploit.
+After that, you can use this information to identify the impact of an attack.
+Identifying impacts relies on knowing the attack vector in addition to the value of the assets being attacked to better understand what damage an attacker can do or what they can steal.
+
+===== Example: Identyifying Impact
+
+Now that you have a set of attack vectors and understand the value of what you’re trying to protect, it is possible to evaluate their impact on your system.
+Identify impacts is an important task where you can start to classify what an attacker would be able to achieve given a successfully exploited attack vector and what impact on the project or organization.
+This task is often done in conjunction with identifying attack vectors, but they are split out in this section to highlight how you should think about identifying impacts specifically.
+First, you should look at the attack vectors and see how they can be exploited for an attacker’s goal like stealing data or intellectual property, disrupting the normal operations of systems, or modifying systems to run malicious code.
+While doing this, also look at how inadvertent attacks can then lead to future exploitation from malicious actors.
+This analysis is often done through mechanisms like building attack trees.
+_Attack trees_ are diagrams where you list an attacker’s goal like, “source code stolen,” and then list the paths of attack vectors that help someone achieve that goal.
+For example, a path might look something like:
+
+. Steal credentials through phishing attack
+. Get remote access to developer workstation
+. Use stolen credentials to access Git repository
+. Download source code to workstation
+. Forward source code to attacker’s systems
+. Source code stolen
+
+There could be multiple other paths to achieve the goal of stealing the source code, like accessing the workstation through extortion of an authorized user and then following a similar path.
+These examples will keep it simple and use only a few attack vector paths to illustrate how to measure impact, but the real world is not so simple.
+
+Understanding the attack paths and all the attack vectors used help threat modelers understand what is required to successful achieve attack goals in systems.
+This understanding can then be used to quantify the risk and costs for an attacker.
+This then helps you understand the likelihood of a potential attack vector or set of attack vectors being used in a real-world attack compared to the value of what your’re trying to protect.
+For example, if the likely cost of exploiting an attack vector is hypothetically 10x more expensive than the value of the data they are stealing it is probably not worth it for the attacker.
+The same is true if the likelihood of being caught is quite high for the attacker.
+On the other hand, if the cost of using an attack vector is low compared to the value of achieving the goal, it is probably worthwhile to explore measures to harden your security against that attack vector.
+
+Now let’s explore the goal of protecting your source code asset.
+You have built out the attack vectors associated with how the source code could be stolen, use that to see the likelihood of attacks.
+This then helps you in the next step when figuring out what to do about the riskiest attacks.
+Since we don’t have actual numbers to quantify your costs we’ll just estimate.
+
+First let’s look at the DNS related attacks.
+These are highly unlikely.
+Compromising DNS and the secrets needed in this way requires a lot of sophistication, as an attacker would need to either modify the DNS configuration on the machines they plan to compromise (which means they would need to have significant privilege already) our they would need to infiltrate the organization’s DNS systems, which itself is difficult.
+This could be made easier if the attacker first hijacked systems that manage configuration as code for DNS.
+Compared with the other attack vectors though, like hijacking a workstation through phished credentials, this is much more expensive.
+
+When looking at most of the other attack vectors, they require some level of access in the network already.
+The only potential exception is software engineer workstation.
+Assuming software engineer workstations are laptops that can be removed from the office, these are probably the easiest attack vector.
+Assuming again that access to the laptop and VPN don’t require multi factor authentication (MFA), all an attacker would need to do is steal the credentials or access an unlocked machine to then get access to the source code.
+Stealing the credentials is probably cheap, with phishing, extortion, and spying being relatively low-cost methods.
+
+Now that you have a reasonable idea of the most common attack vectors for stealing the source code, you should look at the actual cost of the online banking application source code being stolen.
+Before putting a dollar amount to the source code, you need to evaluate a few things.
+You need to see how much the intellectual property of the source itself is worth.
+This will come from business stakeholders who will be able to estimate the value of your software compared to competitors.
+Next you also need to factor in the cost of attackers leveraging the intelligence gained by looking at your source code for exploiting security vulnerabilities in your source code for additional attacks.
+You will also need to factor in the reputational risk once the compromise is disclosed.
+If you can’t protect your source code, customers will wonder if you have been adequately securing their sensitive data.
+These are just a few of the things that need to be factored in when understanding the complete impact.
+
+To summarize the key pieces of the impact are:
+
+* Value of the asset itself
+* Additional costs of that asset being compromised and being used as a jumping off point to attack other things
+* Knock-on effects of the attack like reputational, legal, and other costs
+
+=== Determining Mitigations
+
+Now that you have a good model for your system and understand the attack vectors and the impact of those attack vectors being exploited in attacks, you begin to determine mitigations for the attacks.
+Determining mitigations involves prioritizing securing against attacks against the likelihood and impact of the attack.
+If an attack is highly likely to happen, be successful, and have a high cost to the project or organization, it will be a high priority to secure against the attack.
+If an attack is less likely to happen, harder to be successful, and have a lower associated cost to the project or organization it will have a lower priority to defend against.
+In a world where your project or organization has infinite time and resources, you would be able to defend against all attacks.
+Since that isn’t possible, you need to figure out ways to prioritize and do the best with the time and resources you do have.
+
+There are two key tasks as part of determining mitigations:
+
+* Designing controls
+* Prioritizing controls
+
+Both designing and prioritizing Controls are linked and done at the same time.
+Designing controls is where you look at an attack vector and figure out methods to secure it.
+This can be proactive security measures like reducing the attack surface — where you design your systems to not be exposed to the vector in the first place.
+Network-based attack vectors against an asset are not exploitable if you don’t give the component network access.
+
+Other common security measures include preventive and detective controls.
+_Preventive controls_ are measures in place to make exploitation of an attack vector harder.
+These are security requirements like strong passwords and MFA.
+It is harder to gain unauthorized access to something like a developer workstation when it’s harder to break their password.
+Even if a developer does break the password, they would still need to circumvent MFA.
+
+_Detective controls_ are security measures that help inform or alert you when an attack is in progress or has been successful.
+Detective controls are useful when it is impossible or infeasible to use preventive controls to mitigate an attack vector.
+In the case of the online banking application, you might imagine that the external payment processor system could have some preventive controls for the elevated access required for integration with your online banking system.
+This might include mutual authentication like mTLS and network controls like a VPN to ensure only approved networks are used in the communication between the two systems.
+This isn’t possible for external customers as they will be logging in from potentially anywhere in the world.
+Restricting them to specific networks in general just isn’t acceptable from a business standpoint.
+However, you can detect suspicious activity.
+You can set up alerts to track suspicious network traffic like multiple attempts of failed logins from certain locations.
+Afterwards you can then react to it.
+
+This is a reasonable starting point, but there are different classes of controls and many frameworks out there that can help you better design security measures for your specific project or organization.
+
+While designing the controls it is also important to figure out their priority.
+As you go through the attacks and their impacts, you will figure out which ones are worth exploring designing controls for in the first place given the time and resources of the team implementing the controls.
+Sometimes you will eliminate controls early on because the risk associated with the attack is too low or the cost associated with the value of the thing you’re trying to protect is too high.
+Sometimes you will eliminate controls later in the control design task.
+Other times you will prioritize controls lower than others and when looking at budgets and resourcing those will be eliminated.
+Depending on your project or organization’s security engineering development style, you might eventually deploy all controls at once as part of your system’s go-live to production or you might deploy out the controls in an agile style following the prioritization developed in the determining mitigations step.
+
+==== Example: Determining Mitigations
+
+Now, back to the online banking application system.
+For the sake of example, imagine you’ve prioritized software engineer workstation-based attack vectors and those associated with the banking application package itself.
+During your exploration, you discovered that the other attack vectors were low risk, or too costly to mitigate compared to the risk.
+You can also assume some basic security controls like authentication between privileged systems, encryption at rest, and similar are just table stakes and not worth going over.
+
+For the software engineer workstation-based attack vectors, you can explore a few different controls.
+As a reminder, the most likely attack vectors against the workstation were to get physical access to the machine and use stolen credentials, or unlocked machine.
+They can also get remote access to the machine via stolen credentials.
+There are a few different controls you can develop here.
+In the case of remote login, a simple detective control would be to just ensure that you track all logins to the workstation.
+This could be combined with other preventive controls that restrict remote access except through registered devices or from specific locations.
+You can also design similar controls for physical access to the workstation.
+If that workstation is being used from unauthorized networks, you can prevent it from accessing your network.
+You can also include preventive and detective end-point software on the machine that can prevent further exploiting access by preventing unauthorized actions like sending content out of approved networks.
+For cases you can’t easily prevent, you can track what actions are performed on the workstations to alert when something is suspicious and be able to easily tell what has been attacked and compromised.
+
+When looking at the banking application package and what controls should be designed, you need to have a good understanding of what attack vectors there are against the package.
+Some examples of those attack vectors are injection of vulnerable code either maliciously or inadvertently, and ingestion of third-party libraries that either maliciously or inadvertently have vulnerable code in them.
+Another common attack vector is a compromised CI system that can be used to inject malicious code.
+These attack vectors when exploited become supply chain attacks.
+
+=== Summary
+
+* The SDLC is the process that attackers exploit in order to conduct supply chain attacks.
+* You need to understand, through threat modeling, how processes like the SDLC and systems in the SDLC can be attacked in order to protect them.
+* In order to understand how systems get attacked, you must first build a model of the system itself.
+* The model of the system can be analyzed to figure out the attack vectors — the places and methods by which the assets in the system can bet attacked.
+* Malicious actors have a diverse set of motivations and sophistication levels that should be understood to figure out the likelihood of different attackers attacking specific assets and the methods they would likely use.
+* The attack vectors along with an understanding of the value of the assets with your system can help you build use case scenarios that can be analyzed to determine how the attack vectors can be exploited in attacks to steal data, shut down operation of applications, and cause other bad outcomes.
+* Often multiple attack vectors are leveraged in a single attack to achieve a malicious actor’s goal.
+* Good actors who are authorized to use your system can still inadvertently attack the system due to lack of training, mistakes, or other unintentional ways.
+* Controls are designed to provide countermeasures to exploitation of attack vectors.
+* Control design and implementation should be prioritized based on the likelihood of attack and cost associated with successful attack vs. the cost of securing against that attack.
+* There isn’t unlimited time and resources to protect against everything, you must prioritize around the risk appetite of your project or organization.

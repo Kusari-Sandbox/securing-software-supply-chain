@@ -5,8 +5,12 @@ v0.1, {docdate}: WIP
 :backend: docbook
 :url-repo: https://github.com/Kusari-Sandbox/securing-software-supply-chain/
 
+// Put blank lines after each `include` because otherwise we'll have to remember
+// to put a blank line at the top of each chapter file.
 include::frontmatter.adoc[]
 
 include::ch-SupplyChainFundamentals.adoc[]
+
+include::ch-IdentifyingThreats.adoc[]
 
 include::glossary.adoc[]
