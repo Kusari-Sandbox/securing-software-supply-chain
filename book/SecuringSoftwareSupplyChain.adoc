@@ -3,6 +3,7 @@ Michael Lieberman; Brandon Lum
 v0.1, {docdate}: WIP
 :doctype: book
 :backend: docbook
+:toc:
 :url-repo: https://github.com/Kusari-Sandbox/securing-software-supply-chain/
 
 // Put blank lines after each `include` because otherwise we'll have to remember
