@@ -13,4 +13,7 @@ include::ch-SupplyChainFundamentals.adoc[]
 
 include::ch-IdentifyingThreats.adoc[]
 
+include::ch-ThinkLikeAttacker.adoc[]
+
 include::glossary.adoc[]
+
