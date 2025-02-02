@@ -16,5 +16,7 @@ include::ch-IdentifyingThreats.adoc[]
 
 include::ch-ThinkLikeAttacker.adoc[]
 
+include::ch-ThirdPartyRisk.adoc[]
+
 include::glossary.adoc[]
 
