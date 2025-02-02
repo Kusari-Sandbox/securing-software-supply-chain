@@ -4,6 +4,8 @@
 [glossary]
 application security::
     measures to prevent or address vulnerabilities in an application's code
+asymmetric cryptography::
+    cryptography that uses a pair of keys: one private for signing, and one public for verifying
 attack tree::
     a diagram listing an attacker’s goal and the paths of attack vectors that achieve the goal
 binary authorization::
@@ -26,6 +28,8 @@ system delivery lifecycle::
     (or software development lifecycle) the development, delivery, or consumption of software systems
 threat modeling::
     the process of analyzing systems to idenify risks mitigation approaches
+transparency log::
+    an append-only, tamper-evident data store that uses Merkle trees to store data
 trusted platform module::
     a dedicated computer chip for storing and protecting sensitive information
 zero trust::
