@@ -18,5 +18,7 @@ include::ch-ThinkLikeAttacker.adoc[]
 
 include::ch-ThirdPartyRisk.adoc[]
 
+include::ch-SecureSoftwareFactory.adoc[]
+
 include::glossary.adoc[]
 
