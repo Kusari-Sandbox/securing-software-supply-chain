@@ -22,5 +22,7 @@ include::ch-SecureSoftwareFactory.adoc[]
 
 include::ch-ArchitectingSSC.adoc[]
 
+include::ch-TrustFoundation.adoc[]
+
 include::glossary.adoc[]
 
