@@ -52,7 +52,7 @@ Why?
 After the initial planning you will need to perform analysis on what features are required for the online bank application.
 This can include features like dashboards for showing account information and tools to help users pay bills.
 Features don’t have to be directly user-facing.
-For example, security features like strong password requirements or other non-functional requirements like 100ms response times.
+For example, security features like strong password requirements or other _non-functional requirements_ like 100ms response times.
 
 ===== Design
 
