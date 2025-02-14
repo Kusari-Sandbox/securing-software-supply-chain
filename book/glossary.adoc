@@ -12,6 +12,8 @@ binary authorization::
     a process for determinding trust based on the provenance provided to you by a secure software factory or other approved mechanism and decide whether you trust that system or software within your risk appetite
 detective controls::
     security measures that help inform or alert you when an attack is in progress or has been successful
+non-functional requirement::
+    a requirement specifying criteria for a system (e.g. performance metrics) instead of behaviors
 preventive controls::
     measures in place to make exploitation of an attack vector harder
 provenance::
