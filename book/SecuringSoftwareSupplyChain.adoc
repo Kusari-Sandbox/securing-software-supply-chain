@@ -24,5 +24,7 @@ include::ch-ArchitectingSSC.adoc[]
 
 include::ch-TrustFoundation.adoc[]
 
+include::ch-MetadataAttestations.adoc[]
+
 include::glossary.adoc[]
 
