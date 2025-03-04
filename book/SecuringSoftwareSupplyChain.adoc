@@ -26,5 +26,7 @@ include::ch-TrustFoundation.adoc[]
 
 include::ch-MetadataAttestations.adoc[]
 
+include::ch-AggregationSynthesis.adoc[]
+
 include::glossary.adoc[]
 
