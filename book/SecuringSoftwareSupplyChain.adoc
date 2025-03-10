@@ -28,5 +28,9 @@ include::ch-MetadataAttestations.adoc[]
 
 include::ch-AggregationSynthesis.adoc[]
 
+include::ch-PolicyInsight.adoc[]
+
+include::ch-Future.adoc[]
+
 include::glossary.adoc[]
 

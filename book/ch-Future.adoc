@@ -1,0 +1,221 @@
+== Future Developments in Supply Chain Security
+
+It is hard to predict where the future of supply chain security will go.
+The problem isn’t going away anytime soon.
+In the timeline of writing this book, there have been multiple major supply chain incidents including most recently a critical supply chain attack against the xz project.
+
+Even though we can’t predict exactly where software supply chain security will go, we can anticipate a few things.
+First and foremost is that attackers will get more sophisticated with their attacks.
+As software evolves, so do the techniques of bad actors.
+We will also see the very tools, frameworks, best practices, and specifications used by attackers against defenders.
+We will probably see attacks that try to exploit misconfigurations in people’s supply chain security to go undetected.
+
+This goes back to what we discussed in the beginning of the book: this is a recursive problem.
+Attackers will attempt to perform supply chain attacks against the various organizations, tools, frameworks, etc. organizations like the bank use to secure themselves.
+If an attack against tools like Kyverno or OPA are successful and go undetected, then it would potentially compromise everything the bank does for supply chain security since it relies on those tools to enforce the practices we described throughout the book.
+This is why defense in depth and still having human-based audits are so important.
+Audits and defense in depth make it more difficult for any one specific security issue leading to a compromise of all systems.
+
+=== SDLC Control Plane
+
+When it comes to solutions, it goes back to what we had explored in earlier chapters.
+We’ll see evolutions on the tools, frameworks, best practices, and specifications we explored throughout this book.
+We’ll also probably see tooling around the idea of an SDLC control plane.
+The software supply chain is complicated and grows more so all the time with the average package getting more and more dependencies.
+We need to have tools that help us managing this complexity better and an SDLC control plane along with tooling to help support it is probably the way the community will go.
+
+The bank will explore building an SDLC control plane itself if tooling if  industry and open source communities don’t build it within the bank’s timeline.
+They need to scale up software supply chain security through all these things they have built like:
+
+* Zero trust for software
+* Secure software factory
+* Supply chain knowledge graph and attestation storage
+* Policy and governance as code
+
+This scaling up requires a way to manage all the things we described throughout this book in a consistent way.
+The bank worries about things slipping through the cracks.
+A good example is what happens if one or more projects the bank manages end up being enforced by old policy as code or no policy as code at all?
+These gaps can be hard to fill, and it will still take a lot of manual effort to try and keep everything up to date.
+This is why the bank will look to build the two main elements of what is currently being proposed in the tech community as an SDLC control plane:
+
+* API that wraps the various systems in the SDLC that takes in attestations like in-toto as input and outputs new attestations like in-toto as outputs.
+* Tooling that is a primary way for the bank to manage their SDLC through the API
+
+Given all the tools and frameworks the bank has already adopted like in-toto, CD Events, OPA, Kyverno, Tekton, TUF, etc. they want to have something that can integrate these all with the elements of the SDLC so they can be managed and secured as if they were one system instead of multiple.
+The bank can start to do this by wrapping the stages in the development processes with a REST API.
+This REST API would require inputs to include things like in-toto attestations and output other in-toto attestations for use by other processes.
+A section of this API in OpenAPI format might look like Listing 11.1.
+
+.Listing 11.1. OpenAPI schema for the build route of a SDLC control plane
+----
+paths:
+  /build:
+    post:
+      tags:
+        - build
+      summary: Add a new build to run
+      description: Add a new build
+      operationId: addBuild
+      requestBody:
+        description: Create a new build
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Build' #A
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Build'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Build'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: './cd_buildstarted.json' #B
+            application/xml:
+              schema:
+                $ref: './cd_buildstarted.json'
+        '405':
+          description: Invalid input
+      security: #C
+        - api_key:
+          - write:builds
+          - read:builds
+#A Build schema will include parameters to the build including security evidence like in-toto attestations 
+#B One of the outputs will be a CD Event for build started
+#C This will utilize standard OpenAPI security mechanisms
+----
+
+Listing 11.1 shows how the bank can get started building out an SDLC control plane.
+They would have similar APIs for other stages as well like packaging and deployment.
+All of them would include schemas for the requestBody that include in-toto attestations like VSAs, SLSA, etc. as inputs.
+The reason for wrapping the build up in an API is it lets the bank swap out implementation components like the policy enforcement or even the build component itself while keeping the interface the same.
+The bank can swap out Tekton for some new and emerging build tool in the future while keeping the same interface.
+This API and the tooling behind it would orchestrate Tekton, in-toto, OPA, and whatever other components the bank would use to secure a particular step of the development processes.
+This lets the bank be flexible and cut costs since switching to a new tool requires some work but doesn’t require all the other steps in the SDLC to change since the interfaces remain the same.
+
+The bank would create multiple of these APIs for managing source, build, packaging, deployment, etc.
+They would also develop a controlling API for all of this.
+This would be akin to how Kubernetes has a high-level API but also has multiple lower-level APIs and can create custom APIs through custom resource definitions.
+The bank would then create tooling like kubectl for Kubernetes to help them manage their SDLC through this API.
+The bank would be able to manage in the future their entire SDLC through a unified API that lets them secure their software supply chain in a simple and straightforward way like Kubernetes allows folks to orchestrate container workloads in a simple and straightforward way.
+A secure SDLC flow is transformed from the complicated set of practices into:
+
+. Developer creates a new software project through an API that is validated against the creation policy.
+. Developer pushes code for a pull request that has signatures, attestations, etc. validated against source policy as code.
+. SDLC API orchestration takes pull request related in-toto attestations and analysis like code review from GUAC and Archivista along with the code and sends it to Build API.
+. Build API runs the build enforced against build policy as code and generates SLSA, SBOM, and other attestations. Build related CD events get published.
+. SDLC API orchestration takes build finished events and looks at the build attestations and publishes the built software to the package repository.
+. Package repository validates that the attestations and the package are within policy and stores the package.
+. Deployment systems get triggered by CD event or human and look at attestations like VSAs and confirm through policy as code that the software has gone through all required steps.
+. SDLC orchestration APIs subscribe to runtime and observability events to verify that everything is working as intended and trigger automation or enforcement actions based on new vulnerabilities are security related analysis coming in.
+
+The bank will want to move off this custom API eventually to a common standard API in the future.
+They don’t want to maintain this internal API and are inclined to fund and/or contribute to an eventual Kubernetes-like control plane for the SDLC.
+The same way Red Hat’s OpenShift or SUSE’s Rancher are based on or extend Kubernetes in various ways but still have the core functionality, a future control plane will be extensible.
+This lets the community and industry build out common standards while having various tools that support those standards, in turn allowing organizations to pick and choose what implementations they use while still being able to move to other implementations in the future.
+
+=== Securing the AI Supply Chain
+
+Before we go any further:
+Artificial Intelligence (AI) is software.
+Anyone who tells you that Generative Artificial Intelligence (GAI), Large Language Models (LLMs), Foundational Models (FMs), Neural Networks, or any other AI buzzword can’t be treated like normal software is misleading you.
+AI runs just like other software.
+There are inputs, those inputs are processed, and there are outputs like any other software.
+
+Just because AI is like normal software doesn’t mean it doesn’t have special properties to be taken into consideration.
+Here are a few of the special properties the bank or any other organization looking to secure the AI supply chain needs to consider:
+
+* Data dependent – AI systems heavily rely on large amounts of data for training and comparatively little code.
+This is compared to traditional software which is mostly code and maybe a little bit of data embedded.
+* Adaptable – AI systems can perform wildly different as they ingest more data at runtime and adapt their models to the new data.
+
+Even with a couple of these special properties outlined, this line is being blurred as AI is being embedded more and more inside or alongside normal software making the distinction of where AI starts and ends within a larger system blurry.
+With that in mind, it is important for organizations like the bank to address supply chain risks in their adoption of AI early.
+This is especially critical given the lack of maturity in the AI space compared to more traditional software.
+
+Luckily, since AI can be treated similarly to software most of the practices, standards, tools, etc. that we’ve explored throughout this book can be used to help secure the AI supply chain.
+The bank wants to use AI to help with problems like analyzing loan risk.
+AI supply chain security will look like what they’ve already done for their other software projects.
+This looks like:
+
+. Using S2C2F to mitigate security risk on dependencies for the AI model.
+. Using Gitsign and emerging tools like Gittuf for ensuring that only trusted actors have been developing the code around the AI model.
+. Using SLSA to track the provenance of the AI software as well as training datasets.
+. Generating SBOMs for AI dependencies and licenses.
+. Running training inside of a secure build system like a secure software factory.
+. Only publishing AI models that have appropriate attestations and distributing updates to the models using TUF.
+. Only deploying AI models that have a VSA.
+. Monitoring running AI models and related software systems and taking appropriate action when a vulnerability or other issue is discovered.
+
+Though AI can be treated like any other software, there are still a few areas the bank needs to pay special attention to when it comes to AI:
+
+* Sensitive data – AI training often involves sensitive or personal data. In the case of the loan risk system the bank is building out, they will train on sensitive data or data that was previously sensitive and had personally identified information or sensitive information scrubbed out of it.
+* AI-specific vulnerabilities - AI models can be susceptible to specific types of attacks, such as adversarial examples, where carefully crafted inputs can deceive the model and cause it to make incorrect predictions.
+If the bank bases its model on top of a vendor or open-source model, they might not know whether they are exposed to AI specific vulnerabilities.
+* Bias issues - AI models can inadvertently learn and amplify biases present in the training data.
+Ensuring fairness and mitigating biases is a critical consideration in AI training processes.
+The bank is also bound by legal and compliance requirements to ensure they don’t make loan decisions on legally protected categories.
+* Transparency - The decision-making process of AI models can be complex and opaque, making it difficult to understand how the model arrives at its predictions.
+Ensuring transparency and explainability of AI models is important, especially if you want to audit and ensure that an AI model was trained in the right way.
+* Continuous learning — AI models often involve continuous learning, where the model is updated and fine-tuned over time as new data becomes available.
+This is unique compared to traditional software where the supply chain of software generally doesn’t change as it continues to operate.
+The bank needs to consider data at runtime as a potential vulnerability or supply chain attack vector.
+
+For the most part AI can be treated like any other software, but it does introduce some complications that we highlighted above.
+The bank will apply the practices we used throughout the book.
+As new tools come out that help the bank with adopting normal supply chain security practices for AI they will explore their use.
+As of the writing of this book, there’s not many tools that help with adopting software supply chain security best practices specifically for AI use cases but luckily a lot of existing tools described throughout this book can be adopted.
+
+Using AI to Secure the Software Supply Chain
+We hope we didn’t scare you off working with AI in the previous section. Even though supply chain security for AI is mostly the same as any other software the risks are so much greater because of:
+Lack of transparency – AI is hard to audit and reverse engineer why AI made a particular decision based on its training data. Normal software can have its code scanned analyzed, its output artifact scanned, etc. The same techniques don’t work for AI.  
+Poisoning attacks – Building on the lack of transparency, AI is susceptible to being trained on bad data that can lead to all outputs of the AI being suspect.
+Bias – Similar to the issues the bank has with using AI for loan risk analysis, the data that these models for helping with supply chain security can be biased even for non-malicious reasons. The AI will still be generating incorrect or insufficient supply chain security content.
+Due to the lack of maturity and various security risks associated with using AI it should be used sparingly when used for security purposes. This will change as AI continues to mature, but we urge caution still in where AI is used. The key areas where AI can be used for the bank are in situations like summarizing and verification. Given the current lack of maturity in AI especially in the realm of code generation it should not be used for generating automation or policy as code. This is even more true if that code is not verified by humans. 
+
+=== Using AI to Secure the Software Supply Chain
+
+We hope we didn’t scare you off working with AI in the previous section.
+Even though supply chain security for AI is mostly the same as any other software the risks are so much greater because of:
+
+* Lack of transparency – AI is hard to audit and reverse engineer why AI made a particular decision based on its training data.
+Normal software can have its code scanned analyzed, its output artifact scanned, etc.
+The same techniques don’t work for AI.  
+* Poisoning attacks – Building on the lack of transparency, AI is susceptible to being trained on bad data that can lead to all outputs of the AI being suspect.
+* Bias – Similar to the issues the bank has with using AI for loan risk analysis, the data that these models for helping with supply chain security can be biased even for non-malicious reasons.
+The AI will still be generating incorrect or insufficient supply chain security content.
+
+Due to the lack of maturity and various security risks associated with using AI, it should be used sparingly when used for security purposes.
+This will change as AI continues to mature, but we urge caution still in where AI is used.
+The key areas where AI can be used for the bank are in situations like summarizing and verification.
+Given the current lack of maturity in AI — especially in the realm of code generation — it should not be used for generating automation or policy as code.
+This is even more true if that code is not verified by humans. 
+
+=== A Final Few Words on People
+
+At the end of the day everything we’ve described throughout this book, whether it’s people building systems that are under risk of attack, people building tools to prevent supply chain attack, or people attacking the software supply chain, it’s about people.
+We don’t want to end this on some deep philosophical rant, but if there is one high level takeaway from this book it is that everyone involved in supply chain security from victim to attacker and defender are people.
+The attackers are developing attacks intended to exploit victims caught unaware.
+The defenders are trying to understand the minds of attackers and build tools, processes, and systems to prevent and mitigate attack.
+
+Everything we have described throughout this book will help prevent, mitigate, or remediate against supply chain attacks, however there is nothing that will prevent it all, and in some cases a sophisticated and dedicated enough attacker will find the weak link and lead to supply chain compromise.
+There’s a lot any one individual can do to help;
+as they say, it takes a village.
+It is difficult if not impossible to write code or build systems for many of these people centric things that help fortify the software supply chain against attack but there’s a lot you, your project, or organization can do. Here are a few examples:
+
+* Non-overworked engineers write fewer bugs in the software supply chain and are less vulnerable to malicious actors.
+* Well-funded open source projects have more resources to spend on good security.
+* Contributing and helping with maintenance of critical open source projects helps with the security burden.
+* Contributing to open source security best practices, frameworks, standards, and tools improves the security posture of the entire technology community.
+* Using security best practices, frameworks, tools in your own project helps secure your project and the users of your project.
+* Providing useful security information to users of software helps end users make security decisions for themselves, their projects, affiliated organizations and their downstream consumers.
+
+Remember that the incidence and impact of supply chain crises can be minimized but never be reduced to nothing in all cases.
+When a supply chain incident does happen it’s a good idea to follow the practices outlined throughout this book, but to also remember the human element.
+Implementation of supply chain security as well as incident response can both be stressful and demands an approach that involves empathy for everyone involved.
+Don’t lose sight, and good luck.
