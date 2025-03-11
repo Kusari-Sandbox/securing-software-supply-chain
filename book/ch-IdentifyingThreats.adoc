@@ -29,7 +29,8 @@ For the purposes of this book, the phases in order are:
 4. Implementation
 5. Maintenance
 
-// TODO insert figure
+.Figure 2.1. The normal SDLC process flow. It also shows some examples of what happens in each step of the process.
+image::images/fig-sdlc_process_flow.png[]
 
 Be aware that these phases aren’t standardized in the broader technology community — some of the phases might have different names.
 These phases are also sometimes split up differently with some of the phases listed above being split into multiple phases and in other cases, two phases are merged.
@@ -146,13 +147,14 @@ These steps often have different names but in this book we will use:
 * Identifying Threats
 * Determining Mitigations
 
-// TODO insert figure
-
 Figure 2.2 shows a simple threat modeling approach where you first understand the system through building a model of that system through diagrams and documentation to build the knowledge you need.
 Then you identify threats in the system you modeled.
 You do this by identifying where uour system can be attacked and what the impacts of those attacks might be.
 Finally, you determine mitigations which is the step where you prioritize designing security measures to defend against the most likely and most impactful attacks.
 Most of the rest of this chapter will be focused on detailing how to apply this simplified threat modeling approach.
+
+.Figure 2.2. A simplified threat modeling flow.
+image::images/fig-threat_modeling.png[]
 
 === Understanding the System
 
@@ -209,7 +211,8 @@ To summarize the key tasks that must be performed when understanding the system 
 Now you can take a closer look at each of the tasks described briefly above.
 This closer look will give you a better understanding of why you need to perform these tasks, as well as how you can perform these tasks.
 
-// TODO insert figure
+.Figure 2.3. The different actors, assets, and systems that need to be considered when modeling an application.
+image::images/fig-threatmod_actors_systems.png[]
 
 ==== Identifying Assets in the System
 
@@ -257,13 +260,14 @@ It means understanding how customers use your application during normal operatio
 The customer wouldn’t access the database containing their banking information directly;
 they interact with a front-end UI via a mobile or web application that then calls an application server which handles transactions to backend banking services and databases.
 
-// TODO insert figure
-
 Figure 2.4 shows a simplified model of understanding the system for the online banking application example.
 This diagram should not be taken as a realistic model of an application, but it helps demonstrate what some of the assets within the online banking system would be, what actors operate with the system, and external systems.
 In a real scenario, you might have dozens of internal and external assets as well as multiple internal and external actors to the system.
 A good practice is to try and keep it simple, focused on the components that interact closely with the core components and data of your system.
 This means you shouldn’t model the components of external systems and think of them as an opaque box and only model the interaction with those systems.
+
+.Figure 2.4. An example banking application model.
+image::images/fig-application_model.png[]
 
 .Exercise 2.1
 ****
@@ -363,7 +367,8 @@ For now, we’re going to keep it simple and just outline straightforward attack
 You can check out the MITRE ATT&CK (pronounced: attack) Frameworkfootnote:[https://attack.mitre.org/] and NIST Cybersecurity Framework (CSF)footnote:[https://www.nist.gov/cyberframework] for two of the most popular frameworks.
 ====
 
-// TODO insert figure
+.Figure 2.5. The components, authorized actors, and external systems to consider when identifying threats for the online banking application.
+image::images/fig-components_actors.png[]
 
 ===== Example: Identifying Threat Vectors
 
