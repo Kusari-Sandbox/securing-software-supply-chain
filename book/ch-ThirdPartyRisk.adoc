@@ -52,10 +52,7 @@ The devices engineers use to write code for their research and POC work will mos
 Like in the planning phase, you need to also build an understanding of the analysis phase.
 Since this diagram will look quite like the work in Chapter 3, we will instead focus on diving in deep to what a research task will look like as a system within the analysis phase.
 
-// TODO: Insert figure 4.1
-
 There are a lot of systems involved in research and building POCs.
-Figure 4.1 shows some of the common ones.
 This example still uses the Identity-Aware Proxy to help you follow Zero Trust Architecture and practices.
 However, let’s take a closer look at some of the other systems and environments:
 
@@ -82,7 +79,7 @@ Now that you have a better understanding of how engineers do research and build 
 
 .Exercise 4.1
 ****
-Figure 4.1 shows how an authorized engineer works with the various systems to do their research and POC work.
+An authorized engineer works with the various systems to do their research and POC work.
 Lawyers are also involved during the research phase determining areas of legal concern.
 Which of the below are they most concerned with?
 
@@ -101,9 +98,7 @@ For the sake of this example, you can assume that all engineers — whether they
 They download tools, libraries, and other dependencies to their local workstations.
 They interact with various systems like VCS and the development environment.
 
-// TODO Add figure 4.2
-
-Figure 4.2 looks like what many consider to be a common supply chain security attack.
+Figure 4.1 looks like what many consider to be a common supply chain security attack.
 You can see a malicious actor either writing bad code for something like an open source library or publishing a malicious package somewhere.
 This then gets downloaded by an engineer to their workstation.
 This compromises the workstation and can begin to potentially hop across security boundaries.
@@ -112,6 +107,9 @@ That code could get built by CI and build systems.
 This could deploy that malicious software to the development environment.
 Their compromised workstation could begin to copy over malicious tools or other software to systems and servers within the development environment.
 Compromised systems and servers in the development environment could then hop security boundaries into other environments and systems if there aren’t adequate security controls.
+
+.Figure 4.1. A threat against research and POC work. A malicious dependency could have a broad impact.
+image::images/fig-malicious_actor_poc.png[]
 
 This shows why third-party attacks can be so nasty.
 Something simple like downloading a package from NPM could lead to significant compromise of an organization’s IT systems.
@@ -237,8 +235,6 @@ In which of the following scenarios would normal network security controls like 
 You know how a simple download of third-party software even in a POC and research context can end up affecting an organization like the bank in ways that can be hard to track down and eliminate.
 Let’s now look at what you can do to both prevent these attack as well as implement systems to better enforce policy and reduce blast radius — what is affected — in the event of an attack.
 
-// TODO Insert Figure 4.3
-
 You now see what steps the bank can take to design and implement controls that help protect against third party dependency-based supply chain attacks and vulnerabilities.
 Let’s go through the important systems and components, and any additions or changes that have been made to them to better mitigate the risks.
 Let’s first list a few controls and then show how these controls are implemented across the various systems and components.
@@ -247,6 +243,9 @@ Let’s first list a few controls and then show how these controls are implement
 * Ensure software and systems development happens only on approved systems and in approved environments.
 * Establish policies and standards around trust of third-party software and systems.
 * Ensure devices follow policies and standards around trust when consuming third-party systems.
+
+.Figure 4.2. Controls implemented across the IT environment to both enable secure research and POCs, as well as prevent vulnerabilities flowing downstream into other systems and environments.
+image::images/fig-poc_controls.png[]
 
 This set of controls can then be implemented throughout the environment on the individual systems and components in the ways described below.
 This design for how development happens across the various systems and environments is highly aspirational.
@@ -357,7 +356,7 @@ This can be implemented through simple tagging and enforcing that, for example, 
 
 .Exercise 4.3
 ****
-Figure 4.3 shows designs for a more secure way to do software and systems development.
+Figure 4.2 shows designs for a more secure way to do software and systems development.
 It uses development workspaces that are separate from the engineer’s workstation.
 What benefit does this system have?
 
@@ -377,14 +376,15 @@ Now you can take that knowledge and use it in the design phase to choose what ma
 
 ==== Understanding the Design Phase
 
-For the design phase, let’s take a closer look at how to refine the systems from the analysis phase, like the one in Figure 4.3 to enforce policy decisions about third-party dependencies.
+For the design phase, let’s take a closer look at how to refine the systems from the analysis phase, like the one in Figure 4.2 to enforce policy decisions about third-party dependencies.
 
-// TODO insert figure 4.4
-
-Figure 4.4 is a level deeper than what you’ve seen so far.
+Figure 4.3 is a level deeper than what you’ve seen so far.
 You can now take a closer look at how bank engineers verify that the code and packages they are downloading are written by trusted identities.
 You can validate that something was signed by a trusted identity by verifying the signatures through cryptographic material like keys and certificates.
 You can also verify the signatures through keyless mechanisms which allow you to take OpenID Connect (OIDC) tokens like those you might get from GitHub or Google Cloud and use them with a root Certificate Authority like Fulcio that supports exchanging an OIDC token for a single use signing certificate.
+
+.Figure 4.3. Engineer downloading packages and code while verifying signatures and attestations. This also shows the development environment enforcing policy through an admission controller.
+image::images/fig-engineer_verifying.png[]
 
 If you have signed emails, code commits, or packages in the past, you have likely used GPG/PGP.
 The GPG mechanisms for signing, though useful for the time they were made, require a ton of infrastructure for distribution of keys, among other issues.
@@ -549,9 +549,10 @@ Which of the following is a valid takeaway from an artifact signature?
 You’ve begun to look at how to use signing as a way of cryptographically linking a person or system with some content, often an artifact.
 Now let’s look at how creating and verifying signatures is not enough on its own.
 
-// TODO insert Figure 4.4
+.Figure 4.4. Identifying threats in signing and verifying signatures. Note that a signature seems to come from a trusted identity but either the cryptographic keys have been stolen or the trusted identity has become malicious.
+image::images/fig-design_threats.png[]
 
-Returning to the hypothetical bank, you can take a closer look at what is shown in Figure 4.4.
+Returning to Secure Bank, you can take a closer look at what is shown in Figure 4.4.
 In the example, you see an engineer installing some software, presumably inside a developer workspace.
 That packaged software is being checked for valid signatures, attestations, SBOMs, etc.
 What happens when the cryptographic keys along with push access to package and code repositories have been stolen or an actor with access to the cryptographic keys and repositories has become malicious?
@@ -589,7 +590,8 @@ a stolen key can be used to potentially sign anything that key is trusted to sig
 This means that if the bank trusts a vendor’s key to sign all software and attestations from that vendor, a stolen key means everything the vendor produces can be fraudulently signed.
 The simple solution here is to figure out a way to both ensure that signing secrets have a shorter lifespan for signing as well as utilizing modern role-based (RBAC) and attribute-based access controls (ABAC) to minimize the blast radius of a successful attack.
 
-// TODO Insert figure 4.13 (where did the others go?!)
+.Figure 4.5. Determining mitigations against stolen keys by using short-lived certificates based on OIDC tokens.
+image::images/fig-oidc_certificates.png[]
 
 The bank was originally building policies and systems that mapped long-lived keys to third-party identities.
 This led to the following issues:
