@@ -22,8 +22,6 @@ It is because the organization recognizes they need to go through a cultural tra
 This transformation requires adopting newer technology models that in turn requires the adoption of new technologies themselves.
 You need to consider this when threat modeling the SDLC.
 
-// TODO: Insert Figure 3.1
-
 Figure 3.1 shows what the bank’s old SDLC looks like.
 It’s inefficient in many ways.
 Its design also introduces a ton of security risk, especially supply chain security risk.
@@ -32,6 +30,9 @@ You can see that the highly linear flow through the process makes feedback loops
 If security is just a step at the end, what happens if a supply chain security vulnerability was introduced in a step like the QA build?
 It would be harder to catch, as well as more expensive to remediate;
 you would potentially have to redo all the steps between QA build and security design/engineering.
+
+.Figure 3.1. An inefficient banking organization SDLC flow. This flow is very linear with long feedback loops leading to inefficient communication.
+image::images/fig-inefficient_sdlc.png[]
 
 The bank wants to achieve their goals, including reducing supply chain security risk.
 To adequately reduce supply chain security risk, they can’t keep performing the same technology practices they have done in the past.
@@ -68,14 +69,15 @@ In waterfall, the bank might deploy an application only once, which means that p
 This is important to consider while threat modeling the SDLC process because you shouldn’t make assumptions on various project management methodologies.
 You need to consider both long and short time frames for systems being built out in your organization’s SDLC.
 
-// TODO: Insert Figure 3.2
-
 Figure 3.2 is a simplified example of how the bank’s SDLC would look after applying some newer technology cultures and practices to the organization.
 You can see that tasks within a phase don’t need to happen in a linear sequence.
 Tasks can happen in parallel and share information back and forth between them.
 You might perform research to inform how you gather requirements and the gathering of your requirements might inform how you do research.
 The actors involved have been simplified to allow for ease of reading.
 In the real world, many more people are likely involved.
+
+.Figure 3.2. A simplified SDLC for Secure Bank.
+image::images/fig-simplified_sdlc.png[]
 
 In the online banking application, you can include security engineering throughout the steps where it makes sense, like research.
 Including most types of engineers in the research process helps to preempt challenges that might arise later in the SDLC.
@@ -148,12 +150,13 @@ For the bank, there are many things to consider.
 A real system model of the planning phase for a large bank would potentially be dozens of diagrams with multiple pages of supporting documentation.
 For the case of showing major supply chain security attacks and vulnerabilities in the planning phase, this model has been simplified.
 
-// TODO: Insert Figure 3.3
-
 The model of the Planning Phase in Figure 3.3 shows an example of the new way the bank will run the planning phase.
 The bank has adopted DevSecOps and newer models of running an SDLC, making the entire process more efficient.
 This transitively helps make the security of the SDLC both more efficient and less expensive.
 You can go through each task step by step and see how.
+
+.Figure 3.3. A model of the Planning phase of the SDLC, including the actors, tasks, and inputs/outputs.
+image::images/fig-planning_phase.png[]
 
 Security Engineering now gets a seat at the table earlier in the SDLC.
 They potentially have a role in all tasks, which allows them to collaborate with the rest of the actors in the SDLC on what makes sense for security, like supply chain security.
@@ -223,7 +226,8 @@ You understand how various actors should be working together to plan the deliver
 However, even an early phase like this can have vulnerabilities that can lead to compromises further in the SDLC.
 Vulnerabilities in this phase can be attacked by malicious actors as well.
 
-// TODO: Insert Figure 3.4
+.Figure 3.4. A people- and process-based threat to the Planning phase. A stakeholder deprioritizes security leading to issues in other phases.
+image::images/fig-planning_threats.png[]
 
 Figure 3.4 might seem silly at first glance.
 How is a business stakeholder deprioritizing something a threat?
@@ -235,7 +239,8 @@ This is shortsighted.
 In this threat, the business stakeholder would most likely be a non-malicious actor.
 Even so, this still increases risk.
 
-// TODO: Insert Figure 3.5
+.Figure 3.5. A cyberattack against the bank's project planning software and the data stored in its database.
+image::images/fig-planning_software.png[]
 
 The example shown in Figure 3.5 might also seem farfetched, however vulnerabilities and attacks like this do happen.
 One was occurring to the Atlassian suite of project management tools as we were writing this section of the book.footnote:[https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-289a]
@@ -311,13 +316,14 @@ At an organization like Secure Bank, they would most likely develop policy and o
 The bank would also probably establish rules for escalation if anyone felt the rules weren’t being followed.
 Another organization might have a different approach like establishing a committee to provide oversight.
 
-// TODO insert Figure 3.6
-
 Figure 3.6 is a simplified implementation of a control like #3 described above.
 Neither the security rngineer SME nor the business stakeholder can get approvals for their projects and systems without abiding by the policy.
 This means the security engineer SME can’t ask for too much without providing a good case that falls under policy and the business stakeholder can’t deprioritize or defund security engineering without providing a case that falls under policy and oversight.
 To go a step further, most likely this control implementation would be described as a process and would include various project management, service management, and other technology systems to codify.
 The bank would probably use tools like ServiceNow to enforce approvals and do some validation against policy.
+
+.Figure 3.6. Control implementation for ensuring adequate security funding.
+image::images/fig-control_funding.png[]
 
 For the cyberattack against the project planning software and data described in Figure 3.5, there are multiple controls that would probably need to be developed and various implementations of those controls to protect against the attacks.
 We won’t describe all the controls, but we can go through several associated by category:
@@ -343,7 +349,8 @@ We won’t describe all the controls, but we can go through several associated b
 The above controls are a reasonable start for protecting systems like the project planning system from attack.
 Remember, if the project planning system is compromised, both the data in the system as well as downstream access it provides would allow for supply chain attacks against version control systems like Git, as well as potentially allow for triggering downstream builds or deployments.
 
-// TODO: Insert Figure 3.7
+.Figure 3.7. Secure Bank's control implementations to protect their project planning software against cyberattack.
+image::images/fig-implemented_controls.png[]
 
 The bank has adopted newer cultures and practices like DevSecOps, and zero-trust architectures allowing them to build out systems that make implementing the controls in Figure 3.7 easy, efficient, and cost-effective.
 Let’s look at each of the systems and processes in more detail and how they more easily follow policies and standards:
