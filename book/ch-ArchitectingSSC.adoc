@@ -175,7 +175,8 @@ A mobile device management (MDM) solution can ensure that all devices use approv
 Providing the identity of devices is also important and, where possible, solutions should leverage hardware roots of trust like Trusted Platform Modules (TPMs).
 This would look like Figure 6.1.
 
-// TODO Add Figure 6.1
+.Figure 6.1. Endpoint protection in a developer workstation.
+image::images/fig-developer_workstation.jpg[]
 
 In Figure 6.1, you can see endpoint protection mechanisms in place:
 malware protection, data loss prevention, and the necessary components to perform inventory and enforce policies across the organization’s endpoint systems, such as a hardware inventory management system.
@@ -190,7 +191,8 @@ It consists of all aspects of managing trust, including a set of services, polic
 Examples of this include OIDC/LDAP/OAUTH protocols, and identity management systems like Active Directory (for users) and  Secure Production Identity Framework For Everyone (SPIFFE) and SPIRE, a SPIFFE runtime environment, which together provide an identity management system for machines.
 Figure 6.2 shows how this might look.
 
-// TODO Insert Figure 6.2
+.Figure 6.2. Endpoint protection in a developer workstation linked to a trust foundation.
+image::images/fig-developer_workstation-trust.jpg[]
 
 ==== Securing Development
 
@@ -209,7 +211,8 @@ should code development tooling be moved from running from on the workstation to
 Running the developer tools on an organization-controlled machine within a datacenter is much easier to secure than a workstation in the wild.
 Figure 6.3 shows what this may look like for Secure Bank.
 
-// TODO Insert Figure 6.3
+.Figure 6.3. Integration of secure development with endpoint protection components.
+image::images/fig-endpoint_protection.jpg[]
 
 However, the Figure 6.3 with all secure development is not complete.
 Naturally, the secure development infrastructure needs to hold itself to the same trust rules that an organization puts in place.
@@ -218,7 +221,8 @@ Should front-end Python developers be able to write to the Golang payments code?
 Thus, secure development components need to consult the trust foundation.
 Figure 6.4 provides a more complete picture of the Secure Bank secure supply chain architecture.
 
-// TODO Insert Figure 6.4
+.Figure 6.4. Integration of secure development with endpoint protection components linked to trust foundation.
+image::images/fig-endpoint_protection-trust.jpg[]
 
 You can observe that each component in the architecture falls into a broad category of the SDLC and their protections.
 For example, a developer workstation would naturally be concerned with endpoint protection, and the development infrastructure is all about secure development.
@@ -269,8 +273,6 @@ We will cover more on this in a chapter 9.
 
 Naturally, the policies around what is trusted, again, are rooted within the trust foundation of an organization.
 
-// TODO Insert Figure 6.5 and figure out where to reference it.
-
 ==== Securing the Software Factory
 
 Now that you’ve got all of your code securely written and ingested, it’s time to put it together!
@@ -290,7 +292,8 @@ As shown above, the secure software factory pulls in code from secure ingestion 
 It then takes the output and puts them back into the secure development infrastructure for future use by developers or to run in a cluster!
 For more information about nuts and bolts of a secure software factory, refer back to chapter 5.
 
-// TODO Insert Figure 6.6 and figure out where to reference it.
+.Figure 6.5. Integration of secure software factory, secure ingestion, and development infrastructure.
+image::images/fig-secure_software_factory.jpg[]
 
 ==== Authorizing Software
 
@@ -308,8 +311,6 @@ The collection of these are known as a secure deployment pipeline.
 These services and processes deploy software to clusters.
 Modern cloud-native deployments make use of continuous delivery pipelines (or GitOps), which will verify deployment configuration and ensure that software is approved to run, and run them through a workload orchestrator like Kubernetes or OpenStack.
 
-// TODO Insert Figure 6.7 and figure out where to reference it
-
 .Exercise 6.2
 ****
 . Which is the one component that almost every component in the secure supply chain architecture consults with?
@@ -325,11 +326,12 @@ Modern cloud-native deployments make use of continuous delivery pipelines (or Gi
 
 You’ve made it to the end of the SDLC!
 It was quite a journey and filled with many different components and secure practices that need to be integrated.
-As you can see from Figure 6.8, when we put all the components together, it becomes quite a complex and inter-dependent system.
+As you can see from Figure 6.6, when we put all the components together, it becomes quite a complex and inter-dependent system.
 The diagram is to show the level of complexity, all the components and actions are from the above sections.
 Don’t squint too hard!
 
-// TODO Insert Figure 6.8
+.Figure 6.6. All components of the example together showing the “mess” of complexity involved with trying to apply a secure software supply chain architecture over an example financial organization trying to create a payment app.
+image::images/fig-full_ssc_architecture.jpg[]
 
 However, fret not, we do not offer problems without a solution!
 Perhaps going through this process has instead led to more questions than answers.
@@ -338,7 +340,7 @@ What type of metadata should I care about?
 
 We’ve developed a framework for scaling software supply chain security.
 By adopting this framework, you will be able better develop a SDLC architecture to easily navigate through the above highlighted challenges.
-This framework consists of 4 layers, building on top of each other as shown in Figure 6.9.
+This framework consists of 4 layers, building on top of each other as shown in Figure 6.7.
 These layers are:
 
 * **Trust Foundation:** A decentralized, flexibly anchored trust fabric.
@@ -349,7 +351,8 @@ Intelligent linking of metadata and software identifiers
 * **Policy and Insight:** Automation, risk management, and compliance throughout the SDLC.
 Governance, developer assistance and policy shifted left.
 
-// TODO Insert Figure 6.9
+.Figure 6.7. Framework for scaling software supply chain security.
+image::images/fig-scaling_framework.png[]
 
 In the following chapters, we will go into much more detail for each.
 
