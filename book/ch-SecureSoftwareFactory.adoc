@@ -46,8 +46,6 @@ These activities are also the ones attackers are most interested in exploiting s
 An organization’s production systems are the targets most rich in data for stealing.
 They also are usually highly-privileged and can be further leveraged for lateral movement into other high-value systems.
 
-// TODO Insert Figure 5.1
-
 Figure 5.1 doesn’t show the in-depth interactions between various actors and systems as it would be too complicated to show on a single diagram, but it does highlight a common workflow in the implementation phase.
 This common flow is for a developer to write software in a language like Java, based on various requirements like those outlined in user stories.
 They commit and push that code into a version control system (VCS) like Git.
@@ -55,6 +53,9 @@ This is followed by a CI/CD pipeline like what you might see in Jenkins, Github 
 The CI/CD pipeline will then publish that artifact to a repository for later use and potentially trigger deployment into an upper-level environment like QA.
 Various automated and manual integration, acceptance, and other tests will be run with various actors like QA, product owners, and others making decisions based on the results of the tests, for example, the various tests passing can indicate that the software is now good for deployment into production.
 Finally, that software, assuming it passes all gatekeeping checks, like approvals and tests passing, can be deployed into production.
+
+.Figure 5.1. A common flow of new code being written by software engineers and going through the various implementation phase activities through to eventual production.
+image::images/fig-implementation_flow.png[]
 
 We will go more in-depth later in the chapter about what the system interactions and possible exploits look like in each of these tasks, but you can probably already see various ways that the tasks can be exploited as well as how vulnerable the handoffs between the tasks can be.
 For example:
@@ -102,7 +103,8 @@ Figure 5.2 shows what the bank has before transforming its technology systems in
 To help highlight some of the biggest risks and challenges affecting the development-to-production flow, it doesn't include many of the improvements you made in previous chapters.
 It also stresses why certain changes, especially those related to the build and CI pipelines, are a huge bang for the buck improvement when looking at improving your supply chain security posture.
 
-// TODO Insert Figure 5.2
+.Figure 5.2. An inefficient bank IT setup of actors and systems involved in code going from developer workstation, through the build, and then deployed into a production environment.
+image::images/fig-inefficient_it.png[]
 
 Between what you saw in Figure 5.1 and what you see in Figure 5.2, you start to get an idea of a day in the life of code intended for production environments. 
 A simplified step-by-step description of this is something like this:
@@ -339,7 +341,8 @@ The Secure Software Factory as shown in Figure 5.3 tries to secure the code to a
 * Enforcing workload identities against the build pipelines to protect workload orchestration from tampering.
 * Monitoring the workloads themselves to ensure the build workload itself isn’t being tampered with.
 
-// TODO Insert Figure 5.3
+.Figure 5.3. The components that make up a Secure Software Factory.
+image::images/fig-secure_software_factory.png[]
 
 Enforcing security on the orchestration of build pipelines ensures that build pipelines follow common rules, many of them security related, like ensuring a software composition analysis (SCA) scan runs on all builds.
 It is common in many CI and build systems to either enforce security rules by forcing all builds of a particular type, e.g., Golang build, to use a singular template that includes all required steps or to enforce security steps through manual checks and audits.
