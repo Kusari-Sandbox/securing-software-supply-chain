@@ -528,7 +528,7 @@ In addition to tools specifically designed to help with storing supply chain and
 * Protecting artifact builds through architecting and implementing a secure software factory is one of the most important things you can do in protecting against supply chain compromise.
 * There needs to be a feedback loop to take metadata about supply chain security, like what has been installed and where it has been installed, back through the SDLC to be used in future iterations.
 
-==== Answer Key:
+==== Answer Key
 
 * 5.1 — B — It's when unprivileged code is promoted to privileged environments
 * 5.2 — D — Social engineering attacks on the project stakeholders

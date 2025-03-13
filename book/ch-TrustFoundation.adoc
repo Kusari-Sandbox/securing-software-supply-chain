@@ -442,7 +442,7 @@ This trivial example shows how the bank could then turn this into a much more re
 The bank could then setup functionaries for all the systems and actors involved from the developers writing the source code, to the individual build steps pulling down the code, compiling it, testing it, scanning it, packaging it, and publishing it to the artifact repo.
 Finally, the deployment processes and systems could verify that the artifact has gone through all the right steps, in the right order, and performed by the right systems and actors.
 
-==== Using an in-toto layout
+==== Using an in-toto Layout
 
 TUF and in-toto are two forward-thinking frameworks in helping secure the software supply chain.
 Along with many of the tools, frameworks, best practices, etc. you’ve seen thus far on their own they help a bit.
