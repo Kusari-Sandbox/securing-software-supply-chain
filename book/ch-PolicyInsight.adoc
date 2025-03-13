@@ -212,7 +212,8 @@ The policies as code become software artifacts just like configuration as code o
 A policy definition becomes akin to a software library or configuration template and can be used in multiple places.
 Governance as code can then be used to audit and ensure policy as code happens in all the right places.
 
-// TODO Insert Figure 10.1
+.Figure 10.1. How policy as code can be managed across an IT environment.
+image::images/fig-policy_as_code.png[]
 
 ==== Integration with Existing Tools and Processes
 
@@ -241,7 +242,8 @@ They then implement policy as code and the process ends up looking like:
 . Developer discovers software they want to use.
 . Developer attempts to download the software and if it is within the security requirements encoded in policy as code it is allowed, otherwise it is blocked.
 
-// TODO Insert Figure 10.2
+.Figure 10.2. An organization transitions from manual enforcement of policy through human driven processes to policy as code.
+image::images/fig-org_transition.png[]
 
 Both the old manual process and the new policy as code driven process involves security teams determining what meets policy and security requirements of the bank.
 This will include requirements covered later in this chapter, but you can imagine software with known critical vulnerabilities would probably be blocked.
@@ -304,13 +306,14 @@ What is NOT something the bank will do when updating and managing their policies
 
 Now that you have seen how the bank could start to adopt policy as code and governance as code and apply good practices to their adoption, you can look at their strategic approach to applying policy as code to address their software supply chain security concerns in the SDLC.
 
-Figure 10.4 shows a lot going on but it’s not as complicated as it seems.
+Figure 10.3 shows a lot going on but it’s not as complicated as it seems.
 Every system within the SDLC from development workstations to build and CI systems like Tekton there has a need to enforce security at each stage and between the stages.
 There is also a need to manage the configuration of all these systems as well as ensure policy and governance as code is applied consistently across the systems.
 This set of systems that does this is called the SDLC control plane or supply chain control plane.
 We’ll just call it the SDLC control plane for this book. 
 
-// TODO Insert Figure 10.4
+.Figure 10.4. Policy enforcement across the development systems and processes in the SDLC.
+image::images/fig-policy_enforcement.png[]
 
 This SDLC control plane is a new and emerging idea that applies control plane ideas made popular in networking and cloud and applies them to the SDLC.
 A cloud control plane like Kubernetes for example is focused on managing resources like pods, secrets, configuration items, etc. within a set of configuration rules.
@@ -1000,9 +1003,10 @@ This is where GUAC comes in!
 Scaling policy as code — especially policy as code for implementing software supply chain security — is difficult for a large organization like the bank.
 As discussed throughout this chapter, there are a ton of factors that the bank needs to consider when ensuring that policy is applied consistently across systems, environments, departments, and processes.
 The bank will struggle to ensure there is available data and analysis for policy as code checks without utilizing supply chain metadata storage and analysis systems like a supply chain knowledge graph.
-In Figure 10.5, you can see how the bank uses a supply chain knowledge graph like GUAC as a primary source of data that can then be used by policy as code for enforcement of security requirements.
+In Figure 10.4, you can see how the bank uses a supply chain knowledge graph like GUAC as a primary source of data that can then be used by policy as code for enforcement of security requirements.
 
-// TODO Insert Figure 10.5
+.Figure 10.4. Policy checks using a centralized knowledge graph to enforce supply chain security.
+image::images/fig-centralized_knowledge_graph.png[]
 
 What makes this approach work well, especially in organizations like the bank, is that it scales well across multiple projects.
 It is important for the bank to still generate the attestations and other supply chain security metadata like static analysis scans, vulnerabilities scans, in-toto attestations like SLSA, etc.
