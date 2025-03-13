@@ -394,5 +394,9 @@ However, it is important to be able to break them down into sets of practices th
 
 ==== Answer Key
 
-* 6.1 — 1. Secure Ingestion, 2. Endpoint Protection, 3. Software Authorization, 4. Secure Software Factory, 5. Secure Development
-* 6.2 — 1, False, False
+* Exercise 6.1 — 1. Secure Ingestion, 2. Endpoint Protection, 3. Software Authorization, 4. Secure Software Factory, 5. Secure Development
+* Exercise 6.2
+[arabic]
+.. A — Trust foundation
+.. False
+.. False

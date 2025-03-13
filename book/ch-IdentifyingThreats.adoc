@@ -282,7 +282,7 @@ Imagine you are building an application model for a new online storefront. The m
 * Store inventory information
 * External advertising service
 
-What would a Web Front-End Server be considered in the threat model?
+What would a web front-end server be considered in the threat model?
 
 [loweralpha]
 . Component Asset
@@ -612,3 +612,7 @@ These attack vectors when exploited become supply chain attacks.
 * Controls are designed to provide countermeasures to exploitation of attack vectors.
 * Control design and implementation should be prioritized based on the likelihood of attack and cost associated with successful attack vs. the cost of securing against that attack.
 * There isn’t unlimited time and resources to protect against everything, you must prioritize around the risk appetite of your project or organization.
+
+==== Answer Key
+
+* Exercise 2.1 — The web front-end server would be considered an asset.

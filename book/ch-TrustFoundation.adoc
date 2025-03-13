@@ -512,5 +512,5 @@ Which of the following statements about using AI in securing trust foundations i
 ==== Answer Key
 
 * Exercise 7.1 – B - Generating the root certificate with OpenSSL
-* Exercise 7.2. – A - Root – Maintains root metadata; Targets – Manages file metadata; Snapshot – Ensures consistent repository view; Timestamp – Ensures metadata freshness
+* Exercise 7.2 – A - Root – Maintains root metadata; Targets – Manages file metadata; Snapshot – Ensures consistent repository view; Timestamp – Ensures metadata freshness
 * Exercise 7.3 - C - AI is currently unsuitable high security applications like establishing roots of trust without supervision.
