@@ -49,13 +49,15 @@ Some of these known threats may be easily removed (e.g. software is no longer ne
 In other cases, mechanisms such as sandboxing, network partitions, monitoring, etc. can be put in place to mitigate the risks.
 And finally, in cases where there is no ability to handle the threat, the risk is accepted. 
 
-// TODO: Insert Figure 8.1
+.Figure 8.1. An organization's software with known threats.
+image::images/fig-software-known_threats.png[]
 
 Figure 8.2 shows one possible result of risk management.
 In this case, two of the known threats are removed, and the remaining two had no immediate fixes.
 Thus, they were mitigated via sandboxing.
 
-// TODO: Insert Figure 8.2
+.Figure 8.2. An organization's software with known threats removed and mitigated.
+image::images/fig-software-threats_removed.png[]
 
 ==== I know the issues, now what?
 
@@ -371,7 +373,8 @@ Therefore, it may not be worth it for them to find bugs in a project that only I
 Continuing with the visualization of known threats in an organization from before, let’s add in some unknown threats, illustrated in Figure 8.3.
 As mentioned, the existence of some unknown threats can be assumed, so although they show up in the following figure, they are unknown to the organization.
 
-// TODO: Insert Figure 8.3
+.Figure 8.3. An organization's software with unknown threats.
+image::images/fig-software-unknown_threats.png[]
 
 Figure 8.3 shows 3 unknown threats in the organization software assets (represented by circles).
 Unlike known threats, we do not know that these threats exist, or where they reside.
@@ -379,7 +382,8 @@ Unlike known threats, we do not know that these threats exist, or where they res
 However, there is still something we can do to reduce the risk!
 Based on available metadata, we want to identify potential problematic assets (e.g. unmaintained code, code with many other vulnerabilities) and remove or mitigate them, as shown in Figure 8.4.
 
-// TODO: Insert Figure 8.4
+.Figure 8.4. An organization's software with unknown threats mitigated and removed.
+image::images/fig-software-unknown_removed.png[]
 
 Figure 8.4 shows that the organization decided that certain software’s code was too risky – e.g. bad development practices and security hygiene — and chose to not use it.
 In addition to that, it found some applications that were not maintained and decided to sandbox them.
