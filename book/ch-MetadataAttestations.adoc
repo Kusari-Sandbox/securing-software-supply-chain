@@ -88,7 +88,7 @@ But using the metadata in the software catalog, you can match a binary against a
 Let’s look at an example of how an SBOM can be used within a software catalog to map to vulnerabilities.
 Listing 8.1 shows a partial SBOM for a Java application that uses a vulnerable version of log4j.
 
-.Listing 8.1. Snippet of an SPDX SBOM containing a vulnerable log4j-core component
+.Listing 8.1. Snippet of an SPDX SBOM containing a vulnerable log4j-core component.
 ----
 <TRUNCATED>
 {
@@ -116,7 +116,7 @@ Listing 8.1 shows a partial SBOM for a Java application that uses a vulnerable v
 Listing 8.2 shows how the OSV-Scanner tool can be used to scan an SBOM, which finds any identifier it contains and outputs a set of matched vulnerabilities.
 You can see here that OSV is able to match against the log4shell vulnerability due to the match between the package URL `pkg:maven/org.apache.logging.log4j/log4j-core` against its affected versions including 2.8.1.
 
-.Listing 8.2 OSV Scanner tool matching against SBOM identifiers
+.Listing 8.2. OSV Scanner tool matching against SBOM identifiers.
 ----
 {
   "id": "GHSA-jfh8-c2jp-5v3q",
@@ -216,7 +216,7 @@ For example, through VEX, one is able to communicate that the use of log4j is no
 
 Listing 8.3 shows a VEX document in the OpenVEX format created by a user “Brandon Lum” that states that project `pkg:maven/com.bank.secure.javaapp/myapp@1.0.0` is “not_affected” by the vulnerability log4shell (CVE-2021-44228). This is explained by the justification that “inline_mitigations_already_exists”, as well as a note about the mitigation that exists.
 
-.Listing 8.3 Example of a OpenVEX document
+.Listing 8.3. Example of a OpenVEX document.
 ----
 {
   "@context": "https://openvex.dev/ns",
@@ -271,7 +271,7 @@ This is also known as build provenance.
 Examples of build provenance are Software Levels for Software Artifacts (SLSA) provenance or SPDX 3.0 Build Profiles.
 Listing 8.4 shows a truncated example of SLSA provenance and goes through what some of the fields express.
 
-.Listing 8.4 Example SLSA Provenance
+.Listing 8.4. Example SLSA Provenance.
 ----
 {
     "_type": "https://in-toto.io/Statement/v1 ",

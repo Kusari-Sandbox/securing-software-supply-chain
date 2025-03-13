@@ -410,7 +410,7 @@ Listing 4.1 shows how to generate a key pair and sign an image.
 It assumes you have already built an image and pushed it to a repository.
 The ttl.shfootnote:[https://ttl.sh] service offers an anonymous registry that you can use for experimentation.
 
-.Listing 4.1. Signing a container image with Cosign
+.Listing 4.1. Signing a container image with Cosign.
 ----
 $ cosign generate-key-pair #A
 Enter password for private key: fake_password #B
@@ -429,7 +429,7 @@ Pushing signature to: example.com/fake/some_image@sha256:abc123
 The signature you just made for the image lives alongside the image in the container repo.
 This makes it easy for you to now go and verify the signature on that image.
 
-.Listing 4.2. Verifying a container image signature with Cosign
+.Listing 4.2. Verifying a container image signature with Cosign.
 ----
 $ cosign verify --key cosign.pub example.com/fake/some_image@sha256:abc123 #A
 
@@ -483,7 +483,7 @@ Now that you understand both how Cosign signs objects using keys and have an ide
 The Sigstore project produces a tool called Gitsignfootnote:[https://github.com/sigstore/gitsign] that ties these together for you.
 Assuming you have Gitsign installed and configuredfootnote:[https://docs.sigstore.dev/cosign/signing/gitsign/#configuring-git-to-use-gitsign] you might sign your commits like in Listing 4.3.
 
-.Listing 4.3. Signing a git commit with Gitsign
+.Listing 4.3. Signing a git commit with Gitsign.
 ----
 $ git commit #A
 Your browser will now be opened to:
@@ -514,7 +514,7 @@ You now have signatures stored both in Git itself as well in Rekor, a tamper-evi
 The signature that Gitsign created can now be validated against the Fulcio certificate based on the OIDC token associated with your identity as shown in Listing 4.4.
 This still assumes that you’ve configured Gitsign to be the default signing software in Git.
 
-.Listing. 4.4 Verifying a git commit signature with Gitsign
+.Listing 4.4. Verifying a git commit signature with Gitsign.
 ----
 $ git verify-commit HEAD #A
 tlog index: 3524277 #B

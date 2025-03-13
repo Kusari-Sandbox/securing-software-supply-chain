@@ -515,7 +515,7 @@ Now let’s do this for one of your packages by using GUAC to query the knowledg
 In this case, to mimic a real world example, we will use one of the Hashicorp Consul images retrieved off DockerHub as a stand-in for the payments application.
 In Listing 9.1, we used a formatting script to make the output more readable.
 
-.Listing 9.1
+.Listing 9.1. GUAC query for information known about the golang-payments package.
 ----
 $ guacone query known package "pkg:oci/golang-payments@sha256:e9edd0e93cdd325b144aed2c68d53999875c907c5a37b2d1a9456c8a45886158?repository_url=ghcr.io/securebank&tag=v1.3" | ./format.sh
 
