@@ -10,14 +10,14 @@ In chapter 7, we introduced aggregation and synthesis as the third layer of the 
 In the previous chapter, we covered metadata and attestations, which provided the needed collection of documents to start understanding and making decisions on the SDLC.
 In this chapter we will go into how you can take the raw data and make sense out of it.
 
-=== Metadata, check. What now?
+=== Metadata, Check. What Now?
 
 Previously, we’ve shown a sampler of the different types of metadata and attestations that inch you closer to finally answering some questions about the software produced by our organization’s SDLC.
 Let’s start with a couple use cases and explore how you’d attempt to tackle those today.
 These use cases fall into three main themes:
 reactive (responding to an incident), preventive (checking for known threats), and proactive (identifying high risk areas for future investment).
 
-==== Reactive: Log4shell, how is my organization affected?
+==== Reactive: Log4shell, How is My Organization Affected?
 
 Two of the most common questions asked when a big vulnerability like log4shell is released are “am I affected?” and “how do I respond to it?”
 Today, this is a more challenging question to answer than one may imagine.
@@ -51,7 +51,7 @@ You see from this that you need to effectively aggregate the metadata available 
 .Figure 9.1. An example siloed metadata across teams and different development tools/services.
 image::images/fig-siloed_metadata.jpg[]
 
-==== Preventive: How do I prevent running of insecure software?
+==== Preventive: How Do I Prevent Running Insecure Software?
 
 Security breaches, data leaks, and other security badness often are a result of running vulnerable software.
 Most of the time, these are avoidable if you ensure good security posture and hygiene of software that you release and run.
@@ -76,7 +76,7 @@ This is a complex problem due the need to aggregate internal software data with 
 With the increase in supply chain security controls in compliance frameworks, we expect within the next decade that organizations will need to be able to produce documents and evidence related to not only their software but its supply chain.
 This means incorporating software metadata like SBOM, SLSA, and VEX into your compliance work streams.
 
-==== Proactive: How do I not be on the front page of the WSJ? Finding log4shell before others do
+==== Proactive: How Do I Not be on the Front Page of the Newspaper?
 
 There are many factors that lead to “branded vulnerabilities”, such as Meltdown and Heartbleed, being prominent in the industry.
 Among those are the impact that they have (leaking keys in Heartbleed) as well as how widespread they are (Meltdown affected almost every machine).
@@ -103,7 +103,7 @@ Among many factors, this team considers both open source criticality and organiz
 Organizations have multiple approaches to determine criticality, but largely today are based on manually flagging certain pieces of software.
 However, analytics can be done through synthesizing software metadata such as finding the most-depended-on library within an organization or identifying stale or unmaintained but heavily relied on packages within the ecosystem.
 
-=== Let’s solve it!
+=== Let’s Solve It!
 
 In exploring the problems, we briefly touched on several hurdles to overcome, such as metadata silos, the inability to perform transitive analysis on the software supply chain, and the need to do more advanced synthesis on one’s software catalog.
 These problems fall largely in the domain of aggregation and synthesis of software metadata, and are generally hard problems to solve at scale.
@@ -134,7 +134,7 @@ This is only scratching the surface of the capabilities a software supply chain 
 However, before you get overly excited on what such a knowledge graph can provide us, you need to understand that a supply chain knowledge graph is only as good as the quantity and quality of software metadata it has access to!
 So in order to figure out how your organization can use a supply chain knowledge graph, let’s find out more about how it works!
 
-==== How does a Supply Chain Knowledge Graph work?
+==== How Does a Supply Chain Knowledge Graph Work?
 
 The foundations of a supply chain knowledge graph work via a continuous loop of aggregation and synthesis.
 It continuously does these two functions in order to collect all the metadata across the supply chain and creates relationships between the data so that they can be queried and analyzed to derive answers to the questions.
@@ -184,7 +184,7 @@ From this synthesis process, you were able to answer “what is the security pos
 
 In the following sections, we will showcase how your organization can leverage the power of a supply chain knowledge graph with the GUAC project, and showcase the true capabilities of aggregation and synthesis!
 
-=== Getting started with your own supply chain knowledge graph
+=== Getting Started with Your Own Supply Chain Knowledge Graph
 
 In this chapter, we will use an open source implementation of the supply chain knowledge graph, Graph for Understanding Artifact Composition (GUAC).
 GUAC provides both aggregation and synthesis capabilities, and works by ingesting software metadata from your organization, public sources and vendor tools and synthesizes them as a knowledge graph.
@@ -218,7 +218,7 @@ Great!
 Now that you have an idea of how a supply chain graph should work, let’s get started with getting that data in!
 After all, the fidelity of answers you get from your knowledge graph is only as good as the data that you put in.
 
-==== Tearing down metadata silos
+==== Tearing Down Metadata Silos
 
 Aggregation is where most organizations run into the trouble of metadata silos we hinted at earlier.
 The SDLC is a complex beast and consists of many different components across many products, teams and services.
@@ -230,7 +230,7 @@ You will have to start by asking:
 * How do we and our customers consume software (both internal and external)?
 * For each component of the SDLC, what systems are running?
 
-==== How is software produced?
+==== How is Software Produced?
 
 For the Secure Bank example, let’s start with any end-to-end workflows that you know of.
 One way to do this is through interviewing different teams on their workflow.
@@ -276,7 +276,7 @@ However, you notice that there are some gaps and known unknowns – for example,
 Also, you know certain information exists, such as SBOMs and vulnerability scan results, but you do not know where those are stored.
 This is when you need to do more investigation in order to get a more holistic picture. 
 
-===== How Is software consumed (both internal and external)?
+===== How is Software Consumed?
 
 Continuing along the lines of the workflow for the payments application, let’s start with how is software being consumed throughout the SDLC:
 
@@ -306,7 +306,7 @@ which domain is it hosted on?
 Who owns that domain and how are the credentials for them managed?
 Is HTTPS enabled and how are certificates and keys secured?
 
-===== Curating your inventory
+===== Curating Your Inventory
 
 You’ve gathered quite a lot of information already thus far through the approach of inspecting SDLC processes.
 However, with any type of discovery, you will get the most out of it by adopting different approaches.
@@ -330,7 +330,7 @@ It is highly likely that there will be discrepancies in the lists, which will pr
 For example, you may find that you have an AWS account, but are unsure which teams are using the services.
 Likewise, the OCI registry you pushed the payments container to may not be present in your asset list, and perhaps there are more OCI registries that are not accounted for.
 
-==== It’s impossible!?
+==== It’s Impossible!?
 
 When going through this exercise, do not let perfect be the enemy of good.
 You’ll notice that in certain cases, it is impossible to scope.
@@ -351,7 +351,7 @@ Developer velocity and other business needs often need to be balanced with rolli
 What is helpful here is to make the policy easier to adopt.
 Creating a set of maintained and supported well-lit paths for software development can help focus new development efforts towards good supply chain security practices, and can help teams reduce toil to meet compliance or develop faster!
 
-==== Getting it done
+==== Getting It Done
 
 Based on the example, let’s say you now have a list of repositories, services, assets, SBOMs, SLSA attestations, etc. gathered.
 How do you now translate that into a software supply chain knowledge graph?
@@ -370,7 +370,7 @@ In addition, if there are services that are not supported, or you have a collect
 GUAC supports many different document types, and is actively being extended to ingest more.
 The nature of GUAC’s pluggability, as well as being an open source project, allows constant collaboration and support of the newest and latest standards.
 
-===== Aggregating against unknowns
+===== Aggregating Against Unknowns
 
 Now you’re able to ingest all the information that you know about!
 But recall from earlier that there are likely going to be many known unknowns and unknown unknowns.
@@ -391,7 +391,7 @@ Organizations today regularly pay for threat intelligence feeds, and having thes
 .Figure 9.7. How GUAC helps to augment the data with external metadata sources through collectors.
 image::images/fig-guac_augment.png[]
 
-=== Synthesizing the data
+=== Synthesizing the Data
 
 Now, you should have a pretty good starting point for the data in your supply chain knowledge graph.
 Let’s see how you can leverage that knowledge!
@@ -399,7 +399,7 @@ The following sections will showcase how synthesis can answer supply chain quest
 
 Let us revisit the 3 questions raised at the start of the chapter and see how you can solve them with the help of synthesis capabilities.
 
-==== Responding to vulnerabilities and compromises
+==== Responding to Vulnerabilities and Compromises
 
 “How is my organization affected by new vulnerability/compromise X” is the question you’d like to answer.
 To illustrate, look at an example from the popular open source project curl, a commonly-used tool and library for HTTP requests.
@@ -413,7 +413,7 @@ If you’re part of a large technology company or critical infrastructure, you m
 You will only work with what is known publicly:
 that there’s a CVE and it affects curl.
 
-===== Am I affected?
+===== Am I Affected?
 
 Assume you’ve constructed a GUAC supply chain graph from a corpus of Secure Bank container image SBOMs.
 Since the information provided didn’t give you much, you have to assume that every aspect and version of curl is affected.
@@ -428,7 +428,7 @@ Note that in this example of the pre-disclosure of CVE 2023-38545, you don’t h
 However, in cases where that information is available, the knowledge graph would be able to provide a more succinct list.
 For example, being able to specify affected versions or filtering based on a specific content hash (e.g. finding malware).
 
-===== Where am I affected?
+===== Where Am I Affected?
 
 Now let’s start with one of the potentially-affected packages: pkg:deb/debian/curl.
 To find out where the package exists in Secure Bank, you’ll use the help of the GUAC command called “patch plan”.
@@ -473,7 +473,7 @@ This of course is not specific to open source and third party software.
 Dependencies across libraries, applications, container base images, middleware, etc. exist within in-house written software.
 Therefore knowing the pathway to remediation (and the points of contact) from the bottom up from where these vulnerabilities and compromises happen is helpful to the remediation action plan.
 
-===== Acting on the patch plan
+===== Acting on the Patch Plan
 
 In Figure 9.9, you can see the different versions of pkg:deb/debian/curl returned by the patch plan.
 The curl packages are in the bottom right, and the rest of the image shows which ones are being used by which container images (in the top left), joined by a dependency relationship.
@@ -486,7 +486,7 @@ image::images/fig-patch_plan.png[]
 Unfortunately, in this case (as we found out later), the CVE affected all 7.* versions, which means that all versions you used are affected.
 Therefore, you would just go through the list of affected container images and patch them (and go through the same exercise for the other curl instances that you found in the earlier findSoftware API call). Once all the container images are patched, you can run through the same exercise for the other affected curl packages.
 
-===== A more complex query plan
+===== A More Complex Query Plan
 
 In the previous example, you didn’t have a complex hierarchy of software that was dependent on the vulnerable package.
 However, let’s use another example to illustrate a more complex patch plan.
@@ -502,7 +502,7 @@ Figure 9.10 shows the frontiers going from the antlr package (on the top right) 
 .Figure 9.10. A patch planning graph from GUAC to fix a bad package in the golang antlr library.
 image::images/fig-patch_plan-antlr.png[]
 
-==== Knowing your supply chain
+==== Knowing Your Supply Chain
 
 As introduced at the start of the chapter, responding to compliance requirements on software is part and parcel of an organization that deals with sensitive data.
 For example, part of showing compliance with Executive Order 14028 is being able to produce documents that show a secure development framework in accordance with the NIST Secure Software Development Framework (SSDF).
@@ -573,7 +573,7 @@ From this example, you've seen two great benefits of having a software supply ch
 In this case, the only document you ingested was the SBOM.
 However, through the GUAC deps.dev collector, you automatically got additional information of source repositories and scorecard information, as well as automatic vulnerability scanning done via the OSV certifier.
 
-==== Finding the next big risk
+==== Finding the Next Big Risk
 
 Lastly, it’s time to take a journey towards a proactive approach to security.
 Recall from chapter 8 unknown unknowns, and how you can use general security posture and health checks to help reduce the risk through hardening and policy around coding practice and hygiene.
@@ -628,18 +628,18 @@ What you see here is that you are able to reason across the entire fleet and pri
 .Figure 9.11. A mapping of an organization’s third party risk mapped with frequency on the y-axis and the scorecard score on the x-axis.
 image::images/fig-scorecard_graph.png[]
 
-=== Getting more out of your Software Supply Chain Knowledge graph
+=== Getting More Out of Your Software Supply Chain Knowledge Graph
 
 Getting set up with a software supply chain knowledge graph is the first step, but extracting value out of it is an ongoing effort.
 The more investment put into improving the data quality and honing the skills of using the knowledge graph, the greater the insights into your organization’s software risk you will achieve.
 
-==== Getting as much (good) data as possible, getting more sources
+==== Getting as Much (good) Data as Possible
 
 Your supply chain knowledge graph is only as good as the data you give it!
 It is important to treat the exercise of cataloging your organization’s SDLCs processes well.
 Here are some potential blind spots to take note of.
 
-===== Code is only one aspect
+===== Code Is Only One Aspect
 
 Remember the rest of the SDLC!
 Often whenever you think about software metadata, you just think about source repositories and software repositories.
@@ -648,7 +648,7 @@ However, don’t forget that build information and software authorization inform
 Recall from the first few chapters that tooling across the entire SDLC constitutes your supply chain and thus, each of them produces metadata, and uses metadata from other parts of the SDLC.
 For example, checking the provenance of a build from runtime (software authorization using secure software factory), or ensuring that a tool that is being packaged in a container uses the correct payment service application that has been approved for official release (part of the secure software factory using metadata from software authorization). 
 
-===== But the metadata is there
+===== But the Metadata Is There
 
 If there’s metadata for something, that doesn’t necessarily mean it’s useful
 Anyone can generate an SBOM.
@@ -662,7 +662,7 @@ Another aspect of unhelpful metadata comes from the lack of metadata.
 Knowing about your software is not only about knowing what metadata you have, but knowing what you don’t have!
 For example, you can audit this by querying for all packages with an associated artifact occurrence, and find out which ones do not have an associated SLSA attestation, and use that list of artifacts to drive better build practices or find gaps in metadata aggregation.
 
-===== Good identifiers recorded (for synthesis)
+===== Good Identifiers Recorded
 
 The ability to link data is reliant on the consistency and availability of software identifiers present in the software metadata.
 Ensuring consistency and availability of the types of identifiers used will ensure that matching can be done effectively.
@@ -712,14 +712,14 @@ As mentioned in Chapter 8, AI, as software, is part of the supply chain.
 You can thus employ techniques such as the software supply chain knowledge graph to AI models.
 However, you can also imagine AI being applied to the software supply chain as well.
 
-==== Knowledge graph for AI
+==== Knowledge Graph for AI
 
 As discussed in chapter 8, data lineage is an integral part of understanding the software supply chain of AI models.
 Since models are trained by multiple parties and multiple systems (e.g. using a foundation model like GPT), a model’s supply chain graph suffers from the issue of siloed metadata, and can benefit from aggregation within a knowledge graph.
 In addition, since models are trained and retrained many times, the complexity of the supply chain can go many levels deep, and a graph model is useful to understand the many layers leading to a model’s derivation.
 By chaining SLSA provenances, and joining them against data metadata, data lineage can be derived if metadata is provided by each participant of the model’s creation.
 
-==== AI for knowledge graph
+==== AI for Knowledge Graph
 
 The software supply chain can be complex, and at times, it can be hard to understand the complex interweaving of various supply chain components. This could be an opportunity for AI to help summarize information and understand software relationships. Figure 9.12 shows how some GUAC community members prototyped an AI interface for communicating with GUAC.footnote:[https://github.com/sozercan/guac-ai-mole]
 

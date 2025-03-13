@@ -154,7 +154,7 @@ How do you ensure that the necessary checks and controls have been carried out a
 How do you ensure that code written is securely transmitted and not tampered with?
 ****
 
-=== Applying these practices to your organization
+=== Applying These Practices to Your Organization
 
 Now that you understand the different problems that you need to address, let’s see how they are applied in practice, and how it would look like with the payment service example.
 At the end of this chapter, you should be able to do a similar exercise with your organization. 
@@ -322,7 +322,7 @@ Modern cloud-native deployments make use of continuous delivery pipelines (or Gi
 . True or false: In most cases, software developed and produced by an organization doesn’t rely on external software.
 ****
 
-=== Putting it all together
+=== Putting It All Together
 
 You’ve made it to the end of the SDLC!
 It was quite a journey and filled with many different components and secure practices that need to be integrated.

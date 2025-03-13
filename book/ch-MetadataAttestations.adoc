@@ -10,7 +10,7 @@ Chapter 6 introduced software metadata and attestations as the second layer of t
 The previous chapter covered the trust foundation layer, which set a base of the framework.
 Now this chapter will go through what goes into establishing good software metadata and attestations. 
 
-=== What is metadata for?
+=== What is Metadata For?
 
 When making a decision on whether a piece of software should be run on your production servers, how do you come to that decision?
 You need to be able to reason about the risk of software in the SDLC.
@@ -41,7 +41,7 @@ It should always be assumed that if you know about a known issue, chances are an
 Other types of known security threats include Supply Chain Security compromises (e.g. the Solarwinds compromise), malware (e.g. colors.js) and data breaches (e.g. haveibeenpwned.com).
 Metadata about known security threats are important to address immediately due to their higher likelihood of exploitation.
 
-==== Visualizing known threats in an organization
+==== Visualizing Known Threats in an Organization
 
 The goal in handling known security threats is to identify software in your organization that expose risks and so that you can remediate the risk.
 Figure 8.1 shows an organization with software assets (represented by circles), some of which contain known threats.
@@ -59,14 +59,14 @@ Thus, they were mitigated via sandboxing.
 .Figure 8.2. An organization's software with known threats removed and mitigated.
 image::images/fig-software-threats_removed.png[]
 
-==== I know the issues, now what?
+==== I Know the Issues, Now What?
 
 Armed with a list of known security issues, what do you do now?
 This is a question that many security practitioners had to ask about their organization when the high profile log4shell vulnerability was disclosed in 2021.
 Log4shell had an astounding CVSS 3 score of 10/10, which indicated that ease, impact, and likelihood of exploitation was high on all scales.
 This translates to “yes, this is an important security threat that needs to be addressed immediately”.
 
-===== Is it a problem for me?
+===== Is It a Problem for Me?
 
 For some security practitioners at that time, this was a series of intensive weeks of triage and vulnerability remediation — some more than others!
 For example, if an organization was a Java shop, chances are they had much more to do than a company with a pure golang stack since log4shell is a vulnerability in a Java library.
@@ -328,7 +328,7 @@ By comparing known compromised URIs and hashes, you can determine if the particu
 In this case, you can use the RunDetails of the build together with the builder identifiers (comparing to the information from the reported compromise) to figure out which artifacts may potentially be affected by the compromise.
 And as usual, this information should be cross-referenced with the software catalog and inventory metadata for remediation next steps.
 
-==== Metadata information must be actionable
+==== Metadata Information Must Be Actionable
 
 From the examples of working with known security threats, you can see that metadata plays a critical role in ensuring that you have the necessary information to make supply chain security decisions.
 However, not all metadata is created equal.
@@ -368,7 +368,7 @@ After all, the Linux kernel has had many eyes on it, and has had adversaries act
 Adversarial organizations, like any organizations, have budgets and economics determine target priorities and amount of effort put into finding bugs.
 Therefore, it may not be worth it for them to find bugs in a project that only I use, but if Microsoft decides to use my software in all its embedded devices, chances are CVEs will appear overnight.
 
-==== Visualizing unknown threats
+==== Visualizing Unknown Threats
 
 Continuing with the visualization of known threats in an organization from before, let’s add in some unknown threats, illustrated in Figure 8.3.
 As mentioned, the existence of some unknown threats can be assumed, so although they show up in the following figure, they are unknown to the organization.
@@ -393,7 +393,7 @@ Since you do not have information on where the threats are, you can’t be over-
 Instead, take broad strokes in risk mitigation.
 The hope is that with good metrics and measures, you can cost-effectively mitigate against higher risks and unknown threats.
 
-==== Protecting the source
+==== Protecting the Source
 
 There are unknown security threats that you must consider.
 In order to manage the risk of unknown threats, you can do your best to identify them before they happen.
@@ -418,7 +418,7 @@ Individual components of the score detail additional information like:
 
 The above checks provide an indicator of the general hygiene the project takes towards aspects of code security and can be used to get a sense of the risk of security threats and the speed of response towards new security threats.
 
-==== Protecting the build
+==== Protecting the Build
 
 Another aspect of the supply chain that can be hardened against potential threats is building and packaging of code.
 This is where you can look back to SLSA.
@@ -436,7 +436,7 @@ The adherence to these practices will also be encoded in the SLSA provenance met
 The NIST Secure Software Development Framework (SSDF) provides some guidance around how to secure the SDLC, and Executive Order 14028 requires organizations producing software to federal agencies to provide an attestation of how the NIST SSDF has been met.
 This is another form of metadata that can be used to help evaluate software supply chain security.
 
-==== Unknown threats are still threats
+==== Unknown Threats Are Still Threats
 
 It is important to keep in mind that because you are dealing with unknown security threats, evaluating the scores of the metadata is a proxy to the measure of the threats present in a software’s supply chain.
 There have been many studies to determine metrics that predict bug density, and there are many differing opinions – some of which are contradictory based on research methodology.
@@ -448,7 +448,7 @@ Remember that having a good score doesn’t mean a project is free from vulnerab
 . Besides those mentioned, what are some other ways that we can better handle unknown threats?
 ****
 
-=== Attesting the metadata
+=== Attesting the Metadata
 
 Great, you now have a list of metadata that you can use to make security decisions. Are you ready to go ahead and create that admission control policy to gate the deployed software?
 Not so fast!
@@ -467,7 +467,7 @@ Making a security decision based on falsifiable metadata is equivalent to emitti
 This is why authenticating the integrity and provenance of software metadata is equally important to that of the software itself.
 This is why software metadata must be attested.
 
-==== Attesting software metadata
+==== Attesting Software Metadata
 
 Attestation of software metadata is done by utilizing the trust foundation covered in chapter 7, Trust foundations.
 This usually comes in the form of signing metadata, through the use of attestation formats such as in-toto.
@@ -481,7 +481,7 @@ This is where build provenance can also be (re-)used:
 metadata, after all, is just another artifact produced by a build process.
 The following chapter goes into more details on how a secure software factory does that.
 
-==== Caveats around attestation
+==== Caveats Around Attestation
 
 It is important to keep in mind that besides the malicious case, metadata is sometimes imperfect and evaluation of metadata is a nuanced topic.
 For example, you may have an SBOM, but for some reason the tool failed and creates an empty SBOM due to a tool error.
@@ -498,7 +498,7 @@ Generative AI, or AI/ML models in general, are still software, and thus can be t
 However, they generally take a different shape.
 For example, threats usually manifest themselves in data rather than code, or the fact that the integrity of a model is difficult to reason about.
 
-==== Data is king
+==== Data Is King
 
 In AI, issues and threats usually manifest themselves in data rather than code.
 AI code generally is quite static.
@@ -513,7 +513,7 @@ Both directly used datasets or indirectly through building on top of other found
 With AI modeling building iteratively like software, it is important to know the lineage of the data.
 This is where SLSA plays a role in encoding the provenance of these models, which can then be assembled to trace data lineage and surface bad data usage (e.g. data poisoning, non-compliant licenses, etc.).
 
-==== AI Model integrity is tricky business
+==== AI Model Integrity is Tricky Business
 
 One aspect of AI models that is tricky is inventory, for multiple reasons.
 One is that models are HUGE.
@@ -549,7 +549,7 @@ Unknown security threats must also be addressed in an organization’s risk prof
 * Since metadata is used to make critical security decisions, metadata must be trusted and a way to do that is through attestations (via methods of signing).
 This leverages the strong trust foundation of having a secure software supply chain architecture.
 
-==== Answer key
+==== Answer Key
 
 * Exercise 8.1 Answers: 1) Identify known threats, find out if they affect your organization, find out where they exists in your organization, remove or mitigate the risks. 2) SBOMs, SLSA, VEX
 * Exercise 8.2 Answers: 1) False 2) check for compliance to best practices for hardening, configuration and deployment, looking for unmaintained code, looking for software assets with unknown provenance, turning down unused services. 
