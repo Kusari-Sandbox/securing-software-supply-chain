@@ -61,7 +61,7 @@ If a supply chain compromise came from an external dependency, then those depend
 Due to this fundamental property of the supply chain, you need to apply supply chain security practices to the systems you own and operate and also verify that your dependencies do the same.
 This set of verifications can be done ad infinitum and leads to what is often called “the bottom turtle problem.”.footnote:[See The Bottom Turtle: https://thebottomturtle.io/Solving-the-bottom-turtle-SPIFFE-SPIRE-Book.pdf for more info.]
 
-.Figure 1.2 The depth of the supply chain in technology.
+.Figure 1.2. The depth of the supply chain in technology.
 image::images/fig-supply_chain_depth.png[]
 
 Due to the nature of supply chain compromises affecting trusted systems within your network perimeter (and potentially the network perimeters of your upstream dependencies)  getting in through trusted systems, you must take a zero-trust approach.
@@ -345,7 +345,7 @@ When applying the practices and implementing a secure software factory and binar
 If you are protecting a static marketing website from being defaced, you will most likely have a different security posture compared to projects that interact with your customer data.
 As more projects and organizations in the industry begin to follow these practices to generate provenance in secure ways, the overall burden will go down for everyone and it will become easier and cheaper to become more rigorous in securing the supply chain.
 
-.Figure 1.3 Developing and deploying software with a secure supply chain approach.
+.Figure 1.3. Developing and deploying software with a secure supply chain approach.
 image::images/fig-secure_supply_chain_approach.png[]
 
 === AI and Configuration Management is in the Supply Chain Too

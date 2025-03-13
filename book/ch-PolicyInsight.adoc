@@ -100,7 +100,7 @@ Listing 10.1 shows an example snippet of a common encryption policy that would b
 It is broad in its description, not getting into details on what an “industry-standard, security encryption algorithm” is other than describing an example (AES) and a requirement (minimum key length of 256 bits).
 It leaves a lot up to interpretation to the implementer without additional context on what industry-standard encryption algorithms have been approved by someone or some group within the organization.
 
-.Listing 10.1
+.Listing 10.1. Example encryption policy.
 ----
 Encryption Algorithms and Key Lengths
 
@@ -115,7 +115,7 @@ The policy matches on EncryptionConfiguration Kubernetes resources.
 These are the resources for how Kubernetes handles encryption at rest for various other Kubernetes resources and checks if any of its encryption providers are anything other than AES-GCM based ones.
 Kyverno uses JMESPath, a way to query data in JSON and YAML, to automate checking of data like Kubernetes configuration to enforce policy.
 
-.Listing 10.2
+.Listing 10.2. Example Kyverno policy that enforces all encryption to be AES-GCM.
 ----
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
@@ -150,7 +150,7 @@ This resource would pass the Kyverno in Listing 10.2.
 You can use “aescbc” which is an AES-CBC encryption provider, or any other Kubernetes encryption provider to test out what it will look like if it fails.
 If someone at the bank purposefully or inadvertently includes a different provider, the policy check will trigger and this EncryptionConfiguration will fail to deploy thus complying with bank policy requirements.
 
-.Listing 10.3
+.Listing 10.3. Example EncryptionConfiguration Kubernetes resource.
 ----
 ---
 apiVersion: apiserver.config.k8s.io/v1
@@ -399,7 +399,7 @@ This also uses the Envoy plugin for OPA that lets OPA’s enforcement system Gat
 This example makes sure that all requests are only GET requests to repo1.maven.org over https both to the proxy and to repo1.maven.org.
 In a more realistic situation this policy would include a lot more as this would block all requests other than those to repo1.maven.org.
 
-.Listing 10.5
+.Listing 10.5. Example Rego policy.
 ----
 package artifactproxy
 
@@ -430,7 +430,7 @@ In a real request, there would be a lot more information about server, port, and
 You can test policy evaluation using OPA’s command line tool.
 If you wanted to test out what a failure would look like you can change anything the policy looks for to an invalid value like change the host, scheme, or x-forwarded-proto values.
 
-.Listing 10.6. Envoy request JSON
+.Listing 10.6. Envoy request JSON.
 ----
 {
     "attributes": {
@@ -495,7 +495,7 @@ This JSON includes information indicating that three commits were reviewed acros
 The employee with the email reviewer1@example.com reviewed commits starting with hashes abcd and efgh.
 The employee with email reviewer2@example.com reviewed commits starting with hashes abcd and ijkl.
 
-.Listing 10.7. In-toto code-review attestation
+.Listing 10.7. In-toto code-review attestation.
 ----
 {
     "_type": "https://in-toto.io/Statement/v1", #A
@@ -579,7 +579,7 @@ It still isn’t enough though.
 In a more realistic policy as code, the approved_reviewers list would come from the bank’s IAM systems like Active Directory (AD) or via something like OpenID Connect (OIDC).
 The permissions might also come from AD, or zero-trust rule systems based on the Google Zanzibar project like OpenFGA.
 
-.Listing 10.8. Rego policy for enforcing code review
+.Listing 10.8. Rego policy for enforcing code review.
 ----
 package codereview
 
@@ -676,7 +676,7 @@ This listing shows that the Dependabot tool from GitHub is detected by Scorecard
 Scorecard views that score as a 10.
 The bank can then use a policy language Rego to validate this.
 
-.Listing 10.9. Scorecard result for GUAC
+.Listing 10.9. Scorecard result for GUAC.
 ----
 {
   "date": "2024-04-05T16:01:53Z", #A 
@@ -719,7 +719,7 @@ The bank uses this policy as code to verify that Scorecard has been run on the p
 This policy as code can live on its own and be enforced against every project or the bank might decide to enforce this along with other checks in Scorecard or other best practices.
 In the future, the bank will look to have OpenSSF Scorecard generate in-toto attestations so they can ensure that the Scorecard results are coming from a trusted party like an internal bank system or external system run by a trusted organization like the OpenSSF.
 
-.Listing 10.10. Rego policy enforcing dependency update tool
+.Listing 10.10. Rego policy enforcing dependency update tool.
 ----
 package dependencytool
 
@@ -787,7 +787,7 @@ Listing 10.11 is policy as code that expects to be sent a JSON that includes bot
 In addition, package_checksum and package_name are sent along representing the actual package sent to the package registry system.
 This example assumes the signatures on the SBOM and SLSA have already been verified.
 
-.Listing 10.11 Package verification policy as code
+.Listing 10.11. Package verification policy as code.
 ----
 package verifypackage
 
@@ -880,7 +880,7 @@ The VSA shown in Listing 10.12 will be generated by the verifier service referen
 https://verifier.example.com.
 This service will use the policy listed at https://policies.example.com/ato.rego to verify that the attestations like those stored in https://attestations.example.com/guaccsub-linux-arm/slsa.jsonl meet all the policy requirements of ATO.
 
-.Listing 10.12 Verification Summary Attestation for GUAC
+.Listing 10.12. Verification Summary Attestation for GUAC.
 ----
 {
   "_type": "https://in-toto.io/Statement/v1",

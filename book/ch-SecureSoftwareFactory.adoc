@@ -196,7 +196,7 @@ The application’s only feature is to print the string “Hello World!”
 What could go wrong?
 A lot, it turns out.
 
-.Listing 5.1. Writing a Hello World Application in Go
+.Listing 5.1. Writing a "hello world" application in Go.
 ----
 package hello
 

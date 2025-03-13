@@ -96,7 +96,7 @@ Since this is a root certificate for a rootCA, it is common to have long expirat
 This provides ample time for the bank to be prepared when it does expire.
 There are many flags that can be utilized with this command so read through the OpenSSL man pagefootnote:[https://docs.openssl.org/master/man1/openssl/] or other documentation if you want to know more information or have specific requirements.
 
-.Listing 7.1. Creating a CA and root certificate using OpenSSL
+.Listing 7.1. Creating a CA and root certificate using OpenSSL.
 ----
 $ openssl genrsa -out rootCA.key 4096 #A
 $ openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 3650 -out rootCA.crt #B
@@ -140,7 +140,7 @@ Those should be used when running a real key signing ceremony.
 By signing the root CA key and root certificate, you are establishing that these stakeholders oversaw and approved the generation of the key and certificate artifacts.
 In the future, you might want to use Rekor to store proof that the signing happened, but since this key signing ceremony happens in a simplified air-gapped environment, you can just save the signatures to files.
 
-.Listing 7.2. Signing the root CA key and root certificate using Sigstore Cosign
+.Listing 7.2. Signing the root CA key and root certificate using Sigstore Cosign.
 ----
 $ cosign sign-blob --key principal.key --tlog-upload=false rootCA.key > rootCA_key_principal.sig #A
 $ cosign sign-blob --key ciso.key --tlog-upload=false rootCA.key > rootCA_key_ciso.sig #B
@@ -159,7 +159,7 @@ These other stakeholders could then verify that well-known bank security personn
 You would never distribute the root CA’s private key since it’s private.
 However, when downstream consumers of bank certificates want to verify the root certificate, they can verify that the root certificate was in fact signed by valid stakeholders of the bank as in Listing 7.3.
 
-.Listing 7.3. Verifying the signatures on the root certificate using Sigstore Cosign
+.Listing 7.3. Verifying the signatures on the root certificate using Sigstore Cosign.
 ----
 $ cosign verify-blob --key principal.pub --signature rootCA_crt_principal.sig --insecure-ignore-tlog rootCA.crt #A
 $ cosign verify-blob --key manager.pub --signature rootCA_crt_ciso.sig --insecure-ignore-tlog rootCA.crt #B
@@ -220,7 +220,7 @@ This is often referred to as m-of-n, where m refers to some number less than the
 For example, you can require 3 out of 5 keys to sign off on actions performed by the root.
 This means it would take 3 root keys to be compromised before an attacker could impersonate the root.
 
-.Listing 7.4. Creating an initial configuration of a TUF repo
+.Listing 7.4. Creating an initial configuration of a TUF repo.
 ----
 $ mkdir tuf-example
 $ cd tuf-example
@@ -265,7 +265,7 @@ If an attacker attempts to include different versions’ metadata to include old
 . A machine with the _timestamp_ role key looks at the snapshot metadata frequently and creates metadata with the snapshot’s size and hash with a short expiration time.
 If a consumer of the TUF metadata sees expired data they know that something has been compromised or isn’t working correctly.
 
-.Listing 7.5 Utilizing the TUF repo
+.Listing 7.5. Utilizing the TUF repo.
 ----
 $ cd tuf-example
 $ echo "hello world" > staged/targets/hello #A
@@ -317,7 +317,7 @@ Listing 7.6 shows a simple example in-toto layout.
 This layout shows a supply chain flow that consists of using Git to pull down some code and then turning it into a tarball.
 The layout also describes who is allowed to perform what commands in the layout.
 
-.Listing 7.6. In-toto layout for a simple project
+.Listing 7.6. In-toto layout for a simple project.
 ----
 {
     "_type": "layout",
