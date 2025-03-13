@@ -1094,13 +1094,11 @@ Tools like Open Policy Agent (OPA) can help implement and enforce these policies
 * Reusing policies across enforcement points helps maintain consistency and reduces the burden of managing many slight variations of policies.
 * A feedback loop between policy enforcement and the supply chain knowledge graph allows for continuous improvement and rapid response to new threats.
 
-.Answer Key
-****
+==== Answer Key
 
-. c) Enables consistent and scalable enforcement
-. c) Automatically deploy policy changes to production without testing
-. c) Open Policy Agent (OPA)
-. a) Requiring code reviews before merging
-. a) Checking that all required attestations and metadata are present
-. c) To allow for continuous improvement and rapid response to new threats
-****
+* Exercise 10.1 — C — Enables consistent and scalable enforcement
+* Exercise 10.2 — C — Automatically deploy policy changes to production without testing
+* Exercise 10.3 — C — Open Policy Agent (OPA)
+* Exercise 10.4 — A — Requiring code reviews before merging
+* Exercise 10.5 — A — Checking that all required attestations and metadata are present
+* Exercise 10.6 — C — To allow for continuous improvement and rapid response to new threats

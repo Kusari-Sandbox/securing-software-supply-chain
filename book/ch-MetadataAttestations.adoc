@@ -551,5 +551,8 @@ This leverages the strong trust foundation of having a secure software supply ch
 
 ==== Answer Key
 
-* Exercise 8.1 Answers: 1) Identify known threats, find out if they affect your organization, find out where they exists in your organization, remove or mitigate the risks. 2) SBOMs, SLSA, VEX
-* Exercise 8.2 Answers: 1) False 2) check for compliance to best practices for hardening, configuration and deployment, looking for unmaintained code, looking for software assets with unknown provenance, turning down unused services. 
+* Exercise 8.1 — 1) Identify known threats, find out if they affect your organization, find out where they exists in your organization, remove or mitigate the risks. 2) SBOMs, SLSA, VEX
+* Exercise 8.2
+[arabic]
+.. False
+.. Check for compliance to best practices for hardening, configuration and deployment, looking for unmaintained code, looking for software assets with unknown provenance, turning down unused services

@@ -530,7 +530,7 @@ In addition to tools specifically designed to help with storing supply chain and
 
 ==== Answer Key
 
-* 5.1 — B — It's when unprivileged code is promoted to privileged environments
-* 5.2 — D — Social engineering attacks on the project stakeholders
-* 5.3 — B — Automated generation of secure code
+* Exercise 5.1 — B — It's when unprivileged code is promoted to privileged environments
+* Exercise 5.2 — D — Social engineering attacks on the project stakeholders
+* Exercise 5.3 — B — Automated generation of secure code
 
