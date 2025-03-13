@@ -49,7 +49,8 @@ The build systems can also connect identity through signing to the artifacts it 
 This allows the bank to establish identities in the teams and systems utilized within the SDLC that can be utilized within the Identity and Access Management (IAM) systems within the bank.
 This lowers the blast radius of any compromise into a piece of the SDLC while also making it easier to audit where a software artifact came from, also known as its provenance.
 
-// TODO Add Figure 7.1
+.Figure 7.1. Chains of trust from an established root of trust for the bank.
+image::images/fig-root_of_trust.png[]
 
 === Establishing Roots of Trust
 
@@ -129,7 +130,8 @@ These actions would be performed by a principal security engineer while other ke
 Once the key and certificate generation operations have been performed, the stakeholders need to sign off on these materials to prove that they were there during the generation process and approved of the output.
 Figure 7.2 shows the process graphically.
 
-// TODO Insert Figure 7.2
+.Figure 7.2. Security stakeholders overseeing the root CA process, then signing off on the outputs of that process and finally storing these outputs securely.
+image::images/fig-root_ca_process.png[]
 
 Listing 7.2 utilizes software keys for signing.
 This isn’t nearly as secure as hardware keys but is useful for the example.
