@@ -3,7 +3,7 @@
 
 This work copyright © 2025 by Michael Lieberman and Brandon Lum.
 It is published under the Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA) license.footnote:[https://creativecommons.org/licenses/by-sa/4.0/]
-To report errors or view errata, visit :url-repo:
+To report errors or view errata, visit the GitHub repo.footnote:[{url-repo}]
 
 === Version History
 
