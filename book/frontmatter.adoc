@@ -1,11 +1,11 @@
 [preface]
-== Front Matter
+== Securing the Software Supply Chain
+
+This work copyright © 2025 by Michael Lieberman and Brandon Lum.
+It is published under the Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA) license.footnote:[https://creativecommons.org/licenses/by-sa/4.0/]
+To report errors or view errata, visit :url-repo:
 
 === Version History
-
-=== Credits
-
-* **Editor:** Ben Cotton
 
 === About the Authors
 
@@ -13,10 +13,8 @@
 
 ==== Brandon Lum
 
-=== Foreword
+=== Credits
 
-TODO: Find someone to write a forward?
-
-=== Preface
-
-Do we want a preface?
+* **Editor:** Ben Cotton
+* **Cover design:** Deccafootnote:[https://www.decdesign.com/]
+* **Rendering:** Asciidoctorfootnote:[https://asciidoctor.org]
