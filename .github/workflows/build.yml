@@ -21,8 +21,10 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # tag=v4.2.2
         with:
           persist-credentials: false
-      - name: Install toolchain
-        run: sudo apt-get install -y asciidoctor ruby-asciidoctor-pdf pandoc
+      - name: Install toolchain packages
+        run: sudo apt-get install -y asciidoctor ruby-asciidoctor-pdf
+      - name: Install toolchain gems
+        run: sudo gem install asciidoctor-epub3
       - name: Build book
         run: make all
       - name: Upload output
