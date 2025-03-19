@@ -49,7 +49,7 @@ They also are usually highly-privileged and can be further leveraged for lateral
 Figure 5.1 doesn’t show the in-depth interactions between various actors and systems as it would be too complicated to show on a single diagram, but it does highlight a common workflow in the implementation phase.
 This common flow is for a developer to write software in a language like Java, based on various requirements like those outlined in user stories.
 They commit and push that code into a version control system (VCS) like Git.
-This is followed by a CI/CD pipeline like what you might see in Jenkins, Github Actions, or Tekton, which will download dependencies, scan the code, build the code into a deployable software artifact, scan the output artifact, run unit tests, etc.
+This is followed by a CI/CD pipeline like what you might see in Jenkins, GitHub Actions, or Tekton, which will download dependencies, scan the code, build the code into a deployable software artifact, scan the output artifact, run unit tests, etc.
 The CI/CD pipeline will then publish that artifact to a repository for later use and potentially trigger deployment into an upper-level environment like QA.
 Various automated and manual integration, acceptance, and other tests will be run with various actors like QA, product owners, and others making decisions based on the results of the tests, for example, the various tests passing can indicate that the software is now good for deployment into production.
 Finally, that software, assuming it passes all gatekeeping checks, like approvals and tests passing, can be deployed into production.

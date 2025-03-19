@@ -41,7 +41,8 @@ sometimes tasks in one phase are part of a different phase depending on the orga
 
 ===== Planning
 
-Imagine for example you work at a big bank developing some new online banking software from scratch.
+Imagine for the rest of this book that you work at a big bank we'll call Secure Bank.
+The bank is developing some new online banking software from scratch.
 First you need to plan the project.
 Approximately how much money will the online banking software take?
 What are the timelines for releasing the software?
@@ -122,7 +123,7 @@ The systems could be physical IT systems like server hardware and network device
 They could be virtual IT systems like applications and operating systems.
 They could also refer to non-IT systems that could still be related to your organization, like security processes for physical access to a data center or an organization’s hiring policies.
 
-Imagine you work at a bank and you are trying to secure your online banking application from cyberattack.
+Imagine you are trying to secure Secure Bank's online banking application from cyberattack.
 You want to be able to dive into your system and understand what people are involved in the development and operation of the online banking application like software engineers and project managers.
 You want to also understand what the components of the application are, like server hardware and application packages.
 You also want to determine what the external dependencies are like other services’ APIs and libraries the application depends on.

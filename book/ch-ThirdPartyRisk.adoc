@@ -562,7 +562,7 @@ Here are some of the key systems involved in this threat.
 ** Credentials for access to the repositories can be stolen, often through phishing attacks.
 ** Cryptographic keys for signing packages and code stored in these repos can be stolen, often through other supply chain attacks.
 ** Trusted actors can go rogue and sign malicious software.
-** Package and code repos, especially public ones like Github and NPM, often can’t easily determine if uploaded code is malicious in some way and should be removed.
+** Package and code repos, especially public ones like GitHub and NPM, often can’t easily determine if uploaded code is malicious in some way and should be removed.
 Removal is often based on a manual reporting process.
 ** Many package managers have no way of ensuring that packages came from the source code they claim to be built from.
 * Artifact storage and proxy
