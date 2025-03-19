@@ -11,7 +11,17 @@ To report errors or view errata, visit the GitHub repo.footnote:[{url-repo}]
 
 ==== Michael Lieberman
 
+Michael Lieberman is co-founder and CTO of Kusari where he helps build transparency and security in the software supply chain.
+Michael is an active member of the open source community, co-creating the GUAC and FRSCA projects and co-leading the CNCF’s Secure Software Factory Reference Architecture whitepaper.
+He is an elected member of the OpenSSF Governing Board and Technical Advisory Council along with CNCF TAG Security Lead and an SLSA steering committee member.
+
 ==== Brandon Lum
+
+Brandon loves designing and implementing computer systems (with a focus on Security, Operating Systems, and Distributed/Parallel Systems).
+Brandon is a co-chair of the CNCF Security TAG.
+As a part of Google's Open Source Security Team, he works on improving the security of the open source ecosystem.
+Previously at IBM Research, Brandon worked on various security areas such as:
+container content protection via encryption and image signing, identity, and kernel attack surface reduction.
 
 === Credits
 
