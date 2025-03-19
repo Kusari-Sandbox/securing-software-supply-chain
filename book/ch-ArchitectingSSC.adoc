@@ -283,7 +283,7 @@ Like the infrastructure for development, infrastructure for building software ha
 In addition, the changes to the code need to be part of a vontinuous integration (CI) pipeline to ensure that the most recent, secure and trusted code is made available for use.
 
 A Secure Software Factory Pipeline can be used to do this.
-It includes services and software needed to perform secure builds of software (e.g. Github Actions, Travis CI, Tekton, FRSCA).
+It includes services and software needed to perform secure builds of software (e.g. GitHub Actions, Travis CI, Tekton, FRSCA).
 
 In addition, scanners and validators should also be used to help evaluate the security of the software being built.
 These tools include dynamic and static analysis scanning tools (DAST/SAST), and vulnerability scanners (e.g. Snyk, Grype, Trivy, OSSFuzz).

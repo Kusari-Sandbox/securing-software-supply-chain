@@ -7,7 +7,7 @@ This chapter covers:
 * Approaches to transforming the SDLC into something easier to protect.
 
 In the previous chapter you learned the basics of the system delivery lifecycle and how to create a threat model for the example online banking application.
-You can now apply what you learned to the hypothetical bank that is developing systems like the online banking application, or to other systems like commercial banking applications, loan risk models, etc.
+You can now apply what you learned to developing Secure Bank's systems like the online banking application, or to other systems like commercial banking applications, loan risk models, etc.
 
 === Overview
 

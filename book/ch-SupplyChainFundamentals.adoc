@@ -41,7 +41,7 @@ If the answer is yes, then it falls under the umbrella of software supply chain 
 
 Software supply chain security takes a holistic look at securing the SDLC and all its steps.
 Throughout this book we focus on the supply chain aspects, i.e. development and deployment steps, of the SDLC and don’t go into the project management, design, and others.
-The key steps and systems that are relevant to Software Supply Chain Security are:
+The key steps and systems that are relevant to software supply chain security are:
 
 * Development
 * Source repository
@@ -56,7 +56,7 @@ image::images/fig-sdlc.png[]
 
 ==== The Bottom Turtle
 
-Software Supply Chain Security is also a recursive problem.
+Software supply chain security is also a recursive problem.
 If a supply chain compromise came from an external dependency, then those dependencies themselves can just as easily be compromised by their external dependencies.
 Due to this fundamental property of the supply chain, you need to apply supply chain security practices to the systems you own and operate and also verify that your dependencies do the same.
 This set of verifications can be done ad infinitum and leads to what is often called “the bottom turtle problem.”.footnote:[See The Bottom Turtle: https://thebottomturtle.io/Solving-the-bottom-turtle-SPIFFE-SPIRE-Book.pdf for more info.]

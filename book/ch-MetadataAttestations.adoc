@@ -409,7 +409,7 @@ Individual components of the score detail additional information like:
 * Binary-Artifacts: No binaries are found in the repo
 * CI-Tests: Ensures that the project runs tests before code is merged
 * Code-Review: Determines if the project requires code review before code is merged
-* Dangerous-Workflow: Determines if the project’s Github Action workflows avoid dangerous patterns
+* Dangerous-Workflow: Determines if the project’s GitHub Action workflows avoid dangerous patterns
 * License: Determines if the project has a license file
 * Pinned-Depedencies: Determines if the project has declared and pinned its dependencies
 * Security-Policy: Determines if the project has a published security policy
