@@ -7,6 +7,8 @@ To report errors or view errata, visit the GitHub repo.footnote:[{url-repo}]
 
 === Version History
 
+* Version 1.0rc1 — 2025-03-19 — Initial publication
+
 === About the Authors
 
 ==== Michael Lieberman
