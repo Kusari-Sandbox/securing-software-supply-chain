@@ -7,6 +7,7 @@ v0.1, {docdate}: WIP
 :url-repo: https://github.com/Kusari-Sandbox/securing-software-supply-chain/
 :sectnums:
 :!figure-caption:
+:front-cover-image: image:images/cover.png[Front Cover,2551,3300]
 
 // Put blank lines after each `include` because otherwise we'll have to remember
 // to put a blank line at the top of each chapter file.
