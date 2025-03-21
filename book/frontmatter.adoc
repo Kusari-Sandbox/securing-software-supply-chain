@@ -5,6 +5,11 @@ This work copyright © 2025 by Michael Lieberman and Brandon Lum.
 It is published under the Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA) license.footnote:[https://creativecommons.org/licenses/by-sa/4.0/]
 To report errors or view errata, visit the GitHub repo.footnote:[{url-repo}]
 
+Edited by Ben Cotton.
+Distribution sponsored by Kusari.footnote:[https://kusari.dev]
+Cover design by Decca.footnote:[https://www.decdesign.com/]
+Rendered with Asciidoctor.footnote:[https://asciidoctor.org]
+
 === Version History
 
 * Version 1.0rc1 — 2025-03-19 — Initial publication
@@ -27,9 +32,3 @@ His work delivers critical risk insights to Alphabet’s board and provides acti
 Beyond Google, Brandon is an influential figure in the open-source and security standards communities.
 He serves as Co-chair Emeritus of the CNCF Security TAG and maintains key security projects like SPDX, OpenVEX, GUAC, and SPIFFE/SPIRE.
 He has authored numerous security standards and whitepapers, including SPDX 3.0, CISA publications on SBOM and VEX, and NIST Industry Reports on zero trust, as well as the book _Solving the Bottom Turtlefootnote:[https://spiffe.io/pdf/Solving-the-bottom-turtle-SPIFFE-SPIRE-Book.pdf]_ on zero trust architecture.
-
-=== Credits
-
-* **Editor:** Ben Cotton
-* **Cover design:** Deccafootnote:[https://www.decdesign.com/]
-* **Rendering:** Asciidoctorfootnote:[https://asciidoctor.org]
