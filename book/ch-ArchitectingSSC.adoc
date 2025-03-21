@@ -1,6 +1,6 @@
 == Architecting Supply Chain Security
 
-This chapter covers
+This chapter covers:
 
 * Understanding how components of a software supply chain interact with each other
 * The challenges of scalable software supply chain security
