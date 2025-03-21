@@ -19,11 +19,14 @@ He is an elected member of the OpenSSF Governing Board and Technical Advisory Co
 
 ==== Brandon Lum
 
-Brandon loves designing and implementing computer systems (with a focus on Security, Operating Systems, and Distributed/Parallel Systems).
-Brandon is a co-chair of the CNCF Security TAG.
-As a part of Google's Open Source Security Team, he works on improving the security of the open source ecosystem.
-Previously at IBM Research, Brandon worked on various security areas such as:
-container content protection via encryption and image signing, identity, and kernel attack surface reduction.
+Brandon Lum is a seasoned technologist with a passion for designing and implementing security systems.
+His experience spans cutting-edge research at IBM Research, where he focused on zero trust workload identity, kernel attack surface reduction, and image encryption/signing, to security hardening and offensive security at KPMG and as part of the PPP CTF team.
+At Google, he is a lead of the Software Supply Chain Integrity (SSCI) observability initiative, where he spearheads the aggregation and synthesis of Google’s extensive software supply chain metadata, including SBOM, SLSA, and VEX, at scale.
+His work delivers critical risk insights to Alphabet’s board and provides actionable intelligence to Google’s diverse business units.
+
+Beyond Google, Brandon is an influential figure in the open-source and security standards communities.
+He serves as Co-chair Emeritus of the CNCF Security TAG and maintains key security projects like SPDX, OpenVEX, GUAC, and SPIFFE/SPIRE.
+He has authored numerous security standards and whitepapers, including SPDX 3.0, CISA publications on SBOM and VEX, and NIST Industry Reports on zero trust, as well as the book _Solving the Bottom Turtlefootnote:[https://spiffe.io/pdf/Solving-the-bottom-turtle-SPIFFE-SPIRE-Book.pdf]_ on zero trust architecture.
 
 === Credits
 
