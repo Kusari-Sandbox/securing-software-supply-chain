@@ -12,7 +12,7 @@ Rendered with Asciidoctor.footnote:[https://asciidoctor.org]
 
 === Version History
 
-* Version 1.0rc1 — 2025-03-19 — Initial publication
+* Version 1.0 — 2025-04-01 — Initial publication
 
 === About the Authors
 
