@@ -1,6 +1,6 @@
 = Securing the Software Supply Chain
 Michael Lieberman; Brandon Lum
-v1.0rc1
+v1.0
 :doctype: book
 :backend: docbook
 :toc:
